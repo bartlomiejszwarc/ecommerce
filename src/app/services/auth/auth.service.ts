@@ -22,7 +22,6 @@ export class AuthService {
   constructor(private router: Router) {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUser.set(user);
-      console.log(user);
       if (this.currentUser()) {
         this.router.navigate(['/home']);
       } else {

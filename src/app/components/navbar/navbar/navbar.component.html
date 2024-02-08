@@ -1,35 +1,16 @@
-<div class="w-full flex justify-center mt-4">
+<div class="w-full flex justify-center">
   <div class="flex bg-neutral-800 w-10/12 h-12 rounded-full items-center justify-between md:justify-between px-4">
-    <div class="hidden md:flex cursor-pointer" routerLink="/home"><app-logo [size]="3"></app-logo></div>
-    <div class="flex md:hidden cursor-pointer"><app-logo [size]="1"></app-logo></div>
+    <div class="hidden md:flex cursor-pointer" routerLink="/home"><app-logo [size]="3" /></div>
+    <div class="flex md:hidden cursor-pointer"><app-logo [size]="1" /></div>
 
     <div class="flex items-center space-x-4 justify-around md:justify-center">
-      <div
-        class="flex items-center bg-neutral-100 rounded-full py-1 px-1 md:px-3 w-auto h-8 cursor-pointer md:space-x-1"
-        routerLink="/create"
-      >
-        <span class="hidden md:flex text-neutral-800 font-inter font-bold">Create</span>
-        <span class="material-icons text-neutral-800">add</span>
-      </div>
-      <div
-        class="flex items-center bg-neutral-100 rounded-full py-1 px-1 md:px-3 w-auto h-8 cursor-pointer md:space-x-2"
-        routerLink="/categories"
-      >
-        <span class="hidden md:flex text-neutral-800 font-inter font-bold">Categories</span>
-        <span class="material-icons text-neutral-800">category</span>
-      </div>
-      <div
-        class="flex items-center justify-center bg-neutral-100 rounded-full py-1 px-1 w-8 h-8 cursor-pointer"
-        routerLink="/favorites"
-      >
-        <span class="material-icons text-neutral-800 mt-[1px]">favorite</span>
-      </div>
-      <div
-        class="flex items-center justify-center bg-neutral-100 rounded-full py-1 px-1 w-8 h- cursor-pointer"
-        routerLink="/account"
-      >
-        <span class="material-icons text-neutral-800">person</span>
-      </div>
+      <app-navbar-field url="/create" iconName="add" text="Create" />
+
+      <app-navbar-field url="/categories" iconName="category" text="Categories" />
+
+      <app-navbar-field url="/favorites" iconName="favorite" [iconOnly]="true" />
+
+      <app-navbar-field url="/account" iconName="person" [iconOnly]="true" />
     </div>
   </div>
 </div>
