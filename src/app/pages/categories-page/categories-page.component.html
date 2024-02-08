@@ -1,1 +1,7 @@
-<p>categories-page works!</p>
+<div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-y-12">
+  @for (item of categories; track item.category){
+  <app-category [category]="item" />
+  }
+</div>
+
+<!-- //flex flex-wrap w-full gap-4 -->

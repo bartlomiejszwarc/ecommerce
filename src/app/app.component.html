@@ -1,7 +1,13 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-@if (router.url !== '' || '/signup'){
-<div class="mt-4">
-  <app-navbar />
+<div class="w-full flex justify-center">
+  <div class="w-11/12 md:w-10/12 mt-4 flex flex-col">
+    @if (router.url !== '' || '/signup'){
+    <div class="w-full">
+      <app-navbar />
+    </div>
+    }
+    <div class="w-full px-4 md:px-12 py-3 md:py-6">
+      <router-outlet />
+    </div>
+  </div>
 </div>
-}
-<router-outlet />

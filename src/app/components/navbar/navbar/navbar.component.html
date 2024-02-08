@@ -1,15 +1,11 @@
 <div class="w-full flex justify-center">
-  <div class="flex bg-neutral-800 w-10/12 h-12 rounded-full items-center justify-between md:justify-between px-4">
+  <div class="flex bg-neutral-800 w-full h-12 rounded-full items-center justify-between md:justify-between px-4">
     <div class="hidden md:flex cursor-pointer" routerLink="/home"><app-logo [size]="3" /></div>
     <div class="flex md:hidden cursor-pointer"><app-logo [size]="1" /></div>
-
     <div class="flex items-center space-x-4 justify-around md:justify-center">
       <app-navbar-field url="/create" iconName="add" text="Create" />
-
       <app-navbar-field url="/categories" iconName="category" text="Categories" />
-
       <app-navbar-field url="/favorites" iconName="favorite" [iconOnly]="true" />
-
       <app-navbar-field url="/account" iconName="person" [iconOnly]="true" />
     </div>
   </div>
