@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "salehub-120d1": {
+      "hosting": {
+        "salehub": [
+          "salehub-120d1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "salehub-120d1"
+  }
+}

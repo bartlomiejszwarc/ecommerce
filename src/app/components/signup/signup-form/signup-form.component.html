@@ -1,0 +1,51 @@
+<div class="flex flex-col space-y-6">
+  <app-logo [size]="5"></app-logo>
+  <form [formGroup]="signUpForm" class="flex flex-col w-full md:w-72 font-jost space-y-6 text-xl">
+    <div class="w-full flex border-b-[1px] border-neutral-100 space-x-2 py-2 items-center">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="person"
+        class="text-neutral-100"
+      ></mat-icon>
+      <input
+        formControlName="email"
+        type="text"
+        placeholder="E-mail"
+        class="bg-transparent text-neutral-100 outline-none border-none placeholder:text-neutral-100 placeholder:text-md"
+      />
+    </div>
+
+    <div class="w-full flex border-b-[1px] border-neutral-100 space-x-2 py-2 items-center">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="public"
+        class="text-neutral-100"
+      ></mat-icon>
+      <input
+        formControlName="displayName"
+        type="text"
+        placeholder="Name"
+        class="bg-transparent text-neutral-100 outline-none border-none placeholder:text-neutral-100 placeholder:text-md"
+      />
+    </div>
+
+    <div class="w-full flex border-b-[1px] border-neutral-100 space-x-2 py-2 items-center">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="lock" class="text-neutral-100"></mat-icon>
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        class="bg-transparent text-neutral-100 outline-none border-none placeholder:text-neutral-100 placeholder:text-md"
+      />
+    </div>
+    <span class="text-red-700 font-thin">{{ errorMessage() }}</span>
+    <app-button-form-submit (click)="onSubmitData()" [buttonText]="buttonText"></app-button-form-submit>
+  </form>
+  <div class="w-full flex justify-center font-inter">
+    <span class="text-neutral-200"
+      >Already have an account? <a class="text-cyan-500 font-bold cursor-pointer" routerLink="/">Sign in</a></span
+    >
+  </div>
+</div>
