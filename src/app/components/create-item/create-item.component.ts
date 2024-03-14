@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
 import { ImageAddFieldComponent } from './image-add-field/image-add-field.component';
+import { CreateItemSummaryCardComponent } from './create-item-summary-card/create-item-summary-card.component';
 import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
@@ -23,6 +24,7 @@ import { MatRadioModule } from '@angular/material/radio';
     ReactiveFormsModule,
     TextFieldModule,
     ImageAddFieldComponent,
+    CreateItemSummaryCardComponent,
     MatRadioModule,
   ],
   templateUrl: './create-item.component.html',
@@ -40,14 +42,15 @@ export class CreateItemComponent {
   itemService = inject(ItemService);
   authService = inject(AuthService);
 
-  itemName: string = '';
+  itemName: string = 'This is my first product';
   itemNameMaxLength: number = 100;
-  itemDescription: string = '';
+  itemDescription: string =
+    'This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. ';
   itemDescriptionMaxLength: number = 1000;
   itemImagesArray: any[] = [];
   itemImagesArrayMaxLength: number = 3;
   array = Array.from({ length: this.itemImagesArrayMaxLength }, (_, index) => index);
-  itemPrice: number = 0;
+  itemPrice: number = 21.37;
   itemIsNew: boolean = false;
 
   onCreateItem = async () => {

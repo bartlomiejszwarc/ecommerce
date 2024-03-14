@@ -1,1 +1,6 @@
-<p>create-item-summary-card works!</p>
+<div class="flex flex-col space-y-2 py-3">
+  <span class="text-3xl">{{ title }}</span>
+  <span class="text-lg font-thin">{{ description }}</span>
+  @if (isNew){<span class="text-md">Brand new</span>} @if (!isNew){<span class="text-md">Pre-owned</span>}
+  <span class="text-md">Price: ${{ price }}</span>
+</div>
