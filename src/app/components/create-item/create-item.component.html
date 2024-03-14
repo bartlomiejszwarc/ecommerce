@@ -1,0 +1,67 @@
+<div class="w-full xl:w-10/12 rounded-lg border-neutral-300 border-4">
+  <mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Name & describe</ng-template>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="E.g. Sony 3D glasses" [(ngModel)]="itemName" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          maxlength="300"
+          placeholder="E.g. Bought in 2010. Barely used."
+          [(ngModel)]="itemDescription"
+        >
+        </textarea>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Sale details</ng-template>
+      <mat-form-field>
+        <mat-label>$ Price</mat-label>
+        <input
+          matInput
+          placeholder="E.g. Sony 3D glasses"
+          type="number"
+          inputmode="decimal"
+          [(ngModel)]="itemPrice"
+          #item
+          (change)="onChange(this.item.value)"
+        />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Pictures</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Address" />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onCreateItem()">Create item</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

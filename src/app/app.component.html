@@ -1,13 +1,16 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <div class="w-full flex justify-center">
-  <div class="w-11/12 md:w-10/12 mt-4 flex flex-col">
-    @if (router.url !== '' || '/signup'){
-    <div class="w-full">
+  <div class="w-11/12 md:w-10/12 flex flex-col">
+    @if (router.url !== '/signup' && router.url !== '/'){
+    <div class="w-full mt-4 flex flex-col space-y-5">
       <app-navbar />
-    </div>
-    }
-    <div class="w-full px-4 md:px-12 py-3 md:py-6">
       <router-outlet />
     </div>
+    }
   </div>
 </div>
+@if (router.url === '/signup' || router.url === '/'){
+<div class="w-full">
+  <router-outlet />
+</div>
+}

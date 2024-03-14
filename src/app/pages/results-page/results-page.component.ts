@@ -14,7 +14,6 @@ export class ResultsPageComponent {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.category = params['subcategory'];
-      console.log(this.category);
     });
   }
 }
