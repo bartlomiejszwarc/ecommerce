@@ -1,0 +1,9 @@
+.material-icons {
+  font-size: 36px;
+}
+
+@media (width <= 768px) {
+  .material-icons {
+    font-size: 24px;
+  }
+}

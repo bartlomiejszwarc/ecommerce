@@ -8,6 +8,9 @@ import { IItem, ItemService } from './../../services/item/item.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
+import { ImageAddFieldComponent } from './image-add-field/image-add-field.component';
+import { MatRadioModule } from '@angular/material/radio';
+
 @Component({
   selector: 'app-create-item',
   standalone: true,
@@ -19,6 +22,8 @@ import { take } from 'rxjs';
     FormsModule,
     ReactiveFormsModule,
     TextFieldModule,
+    ImageAddFieldComponent,
+    MatRadioModule,
   ],
   templateUrl: './create-item.component.html',
   styleUrl: './create-item.component.css',
@@ -36,8 +41,12 @@ export class CreateItemComponent {
   authService = inject(AuthService);
 
   itemName: string = '';
+  itemNameMaxLength: number = 100;
   itemDescription: string = '';
+  itemDescriptionMaxLength: number = 1000;
   itemImagesArray: any[] = [];
+  itemImagesArrayMaxLength: number = 3;
+  array = Array.from({ length: this.itemImagesArrayMaxLength }, (_, index) => index);
   itemPrice: number = 0;
   itemIsNew: boolean = false;
 
@@ -48,9 +57,9 @@ export class CreateItemComponent {
       userId: userId!,
       name: this.itemName,
       description: this.itemDescription,
-      imagesArray: [],
-      price: 0,
-      isNew: false,
+      imagesArray: this.itemImagesArray,
+      price: this.itemPrice,
+      isNew: this.itemIsNew,
     };
     this.itemService.createItem(data);
   };

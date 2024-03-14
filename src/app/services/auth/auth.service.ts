@@ -22,11 +22,11 @@ export class AuthService {
   constructor(private router: Router) {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUser.set(user);
-      if (this.currentUser()) {
-        this.router.navigate(['/home']);
-      } else {
-        this.router.navigate(['/']);
-      }
+      // if (this.currentUser()) {
+      //   this.router.navigate(['/home']);
+      // } else {
+      //   this.router.navigate(['/']);
+      // }
     });
   }
 

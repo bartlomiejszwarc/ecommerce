@@ -4,7 +4,10 @@
       <ng-template matStepLabel>Name & describe</ng-template>
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput placeholder="E.g. Sony 3D glasses" [(ngModel)]="itemName" />
+        <input matInput placeholder="E.g. Sony 3D glasses" [(ngModel)]="itemName" maxlength="{{ itemNameMaxLength }}" />
+        <div class="w-full flex justify-end">
+          <span class="text-xs text-neutral-600">{{ itemName.length }}/{{ itemNameMaxLength }}</span>
+        </div>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Description</mat-label>
@@ -14,12 +17,20 @@
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="5"
-          maxlength="300"
+          maxlength="{{ itemDescriptionMaxLength }}"
           placeholder="E.g. Bought in 2010. Barely used."
           [(ngModel)]="itemDescription"
         >
         </textarea>
+        <div class="w-full flex justify-end">
+          <span class="text-xs text-neutral-600">{{ itemDescription.length }}/{{ itemDescriptionMaxLength }}</span>
+        </div>
       </mat-form-field>
+      <mat-radio-group aria-label="Select an option" class="flex flex-col">
+        <mat-radio-button value="1">Brand new</mat-radio-button>
+        <mat-radio-button value="2">Pre-owned</mat-radio-button>
+      </mat-radio-group>
+
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -27,33 +38,40 @@
     <mat-step>
       <ng-template matStepLabel>Sale details</ng-template>
       <mat-form-field>
-        <mat-label>$ Price</mat-label>
-        <input
-          matInput
-          placeholder="E.g. Sony 3D glasses"
-          type="number"
-          inputmode="decimal"
-          [(ngModel)]="itemPrice"
-          #item
-          (change)="onChange(this.item.value)"
-        />
+        <mat-label>Price</mat-label>
+        <div class="flex">
+          <input
+            matInput
+            placeholder="E.g. Sony 3D glasses"
+            type="number"
+            inputmode="decimal"
+            [(ngModel)]="itemPrice"
+            #item
+            (change)="onChange(this.item.value)"
+          />
+          <span>$&nbsp;</span>
+        </div>
       </mat-form-field>
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </mat-step>
     <mat-step>
-      <form>
+      <div class="flex flex-wrap gap-5 py-4">
         <ng-template matStepLabel>Pictures</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" />
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
+
+        @for (item of array; track item) {
+
+        <app-image-add-field />
+
+        }
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
