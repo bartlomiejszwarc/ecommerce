@@ -4,7 +4,7 @@ export interface IItem {
   userId: string;
   name: string;
   description: string;
-  imagesArray: any[];
+  imagesArray: string[];
   price: number;
   isNew: boolean;
 }

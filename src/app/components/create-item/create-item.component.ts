@@ -11,6 +11,7 @@ import { take } from 'rxjs';
 import { ImageAddFieldComponent } from './image-add-field/image-add-field.component';
 import { CreateItemSummaryCardComponent } from './create-item-summary-card/create-item-summary-card.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { ButtonFormSubmitComponent } from '../button-form-submit/button-form-submit.component';
 
 @Component({
   selector: 'app-create-item',
@@ -26,6 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
     ImageAddFieldComponent,
     CreateItemSummaryCardComponent,
     MatRadioModule,
+    ButtonFormSubmitComponent,
   ],
   templateUrl: './create-item.component.html',
   styleUrl: './create-item.component.css',

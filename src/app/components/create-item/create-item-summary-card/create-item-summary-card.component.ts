@@ -12,5 +12,5 @@ export class CreateItemSummaryCardComponent {
   @Input() description: string = '';
   @Input() isNew!: boolean;
   @Input() price!: number;
-  @Input() imagesArray: string = '';
+  @Input() imagesArray: string[] = [];
 }

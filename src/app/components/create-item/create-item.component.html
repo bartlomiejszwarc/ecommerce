@@ -32,7 +32,7 @@
       </mat-radio-group>
 
       <div class="w-full flex justify-end">
-        <button mat-button matStepperNext>Next</button>
+        <button class="text-sky-600 font-medium rounded-sm hover:bg-neutral-100 px-4 py-1" matStepperNext>Next</button>
       </div>
     </mat-step>
     <mat-step>
@@ -53,9 +53,9 @@
         </div>
       </mat-form-field>
 
-      <div class="w-full flex justify-end">
+      <div class="w-full flex justify-end space-x-2">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button class="text-sky-600 font-medium rounded-sm hover:bg-neutral-100 px-4 py-1" matStepperNext>Next</button>
       </div>
     </mat-step>
     <mat-step>
@@ -72,9 +72,9 @@
 
         }
       </div>
-      <div class="w-full flex justify-end">
+      <div class="w-full flex justify-end space-x-2">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button class="text-sky-600 font-medium rounded-sm hover:bg-neutral-100 px-4 py-1" matStepperNext>Next</button>
       </div>
     </mat-step>
     <mat-step>
@@ -84,10 +84,13 @@
         [description]="itemDescription"
         [isNew]="itemIsNew"
         [price]="itemPrice"
+        [imagesArray]="itemImagesArray"
       />
-      <div class="w-full flex justify-end">
+      <div class="w-full flex justify-end space-x-2">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onCreateItem()">Create a sale</button>
+        <button class="text-neutral-50 font-medium rounded-sm bg-sky-600 px-4 py-1" (click)="onCreateItem()">
+          Create a sale
+        </button>
       </div>
     </mat-step>
   </mat-vertical-stepper>
