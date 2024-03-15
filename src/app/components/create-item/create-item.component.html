@@ -64,7 +64,11 @@
 
         @for (item of array; track item) {
 
-        <app-image-add-field />
+        <app-image-add-field
+          [id]="item"
+          [file]="itemImagesArray[item]"
+          (fileSelected)="pushImageToArray($event, item)"
+        />
 
         }
       </div>

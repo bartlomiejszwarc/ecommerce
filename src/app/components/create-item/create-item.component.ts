@@ -80,4 +80,9 @@ export class CreateItemComponent {
       this.itemPrice = 0;
     }
   }
+
+  pushImageToArray(image: any, index: number) {
+    const file = URL.createObjectURL(image);
+    this.itemImagesArray.splice(index, 1, file);
+  }
 }

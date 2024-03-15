@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -8,4 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './image-add-field.component.html',
   styleUrl: './image-add-field.component.css',
 })
-export class ImageAddFieldComponent {}
+export class ImageAddFieldComponent {
+  @Output() fileSelected = new EventEmitter<File>();
+  @Input() id!: number;
+  @Input() file!: string;
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.fileSelected.emit(file);
+  }
+}
