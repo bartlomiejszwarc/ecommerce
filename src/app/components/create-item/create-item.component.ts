@@ -12,6 +12,8 @@ import { ImageAddFieldComponent } from './image-add-field/image-add-field.compon
 import { CreateItemSummaryCardComponent } from './create-item-summary-card/create-item-summary-card.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { ButtonFormSubmitComponent } from '../button-form-submit/button-form-submit.component';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { ICategory, categories } from '../../../assets/categories/categories';
 
 @Component({
   selector: 'app-create-item',
@@ -28,6 +30,7 @@ import { ButtonFormSubmitComponent } from '../button-form-submit/button-form-sub
     CreateItemSummaryCardComponent,
     MatRadioModule,
     ButtonFormSubmitComponent,
+    MatSelectModule,
   ],
   templateUrl: './create-item.component.html',
   styleUrl: './create-item.component.css',
@@ -54,6 +57,11 @@ export class CreateItemComponent {
   array = Array.from({ length: this.itemImagesArrayMaxLength }, (_, index) => index);
   itemPrice: number = 21.37;
   itemIsNew: boolean = false;
+  itemCategory: string = '';
+  itemSubcategory: string = '';
+  currentCategory: any;
+
+  categories: ICategory[] = categories;
 
   onCreateItem = async () => {
     const userId = this.authService.currentUser()?.uid;
@@ -65,6 +73,8 @@ export class CreateItemComponent {
       imagesArray: this.itemImagesArray,
       price: this.itemPrice,
       isNew: this.itemIsNew,
+      itemCategory: this.itemCategory,
+      itemSubcategory: this.itemSubcategory,
     };
     this.itemService.createItem(data);
   };
@@ -81,6 +91,16 @@ export class CreateItemComponent {
     } catch (e) {
       this.itemPrice = 0;
     }
+  }
+
+  onCategoryChange(category: MatSelectChange) {
+    this.itemSubcategory = '';
+    this.currentCategory = null;
+    this.currentCategory = category.value;
+    this.itemCategory = category.value.category;
+  }
+  onSubcategoryChange(subcategory: MatSelectChange) {
+    this.itemSubcategory = subcategory.value;
   }
 
   pushImageToArray(image: any, index: number) {

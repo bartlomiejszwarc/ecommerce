@@ -70,3 +70,11 @@ mat-form-field {
   --mat-radio-checked-ripple-color: #0891b2;
   --mat-radio-disabled-label-color: rgb(0 0 0 / 38%);
 }
+
+.mdc-list-item__primary-text {
+  color: #262626 !important;
+}
+
+.mat-mdc-select-arrow {
+  color: #0e7490 !important;
+}

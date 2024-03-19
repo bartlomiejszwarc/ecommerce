@@ -7,6 +7,8 @@ export interface IItem {
   imagesArray: string[];
   price: number;
   isNew: boolean;
+  itemCategory: string;
+  itemSubcategory: string;
 }
 
 @Injectable({
@@ -15,7 +17,7 @@ export interface IItem {
 export class ItemService {
   constructor() {}
 
-  createItem({ userId, name, description, imagesArray, price, isNew }: IItem): void {
-    console.log(userId, name, description, imagesArray, price, isNew);
+  createItem({ userId, name, description, imagesArray, price, isNew, itemCategory, itemSubcategory }: IItem): void {
+    console.log(userId, name, description, imagesArray, price, isNew, itemCategory, itemSubcategory);
   }
 }
