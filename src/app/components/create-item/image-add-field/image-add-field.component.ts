@@ -14,7 +14,17 @@ export class ImageAddFieldComponent {
   @Input() file!: string;
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.fileSelected.emit(file);
+    try {
+      const file: File = event.target.files[0];
+      if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
+        if (file.size / 1000000 < 8) {
+          this.fileSelected.emit(file);
+        } else {
+          throw new Error('Image cannot be larger than 8 megabytes.');
+        }
+      } else {
+        throw new Error('Invalid image type.');
+      }
+    } catch (e) {}
   }
 }
