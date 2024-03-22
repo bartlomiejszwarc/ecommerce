@@ -3,16 +3,24 @@
 <div
   class="relative aspect-square bg-neutral-200 w-36 md:w-44 rounded-lg flex items-center justify-center cursor-pointer"
 >
-  <input type="file" class="opacity-0 w-full h-full static z-10 cursor-pointer" (change)="onFileSelected($event)" />
-  @if (!file) {<span
+  @if (!file) {
+  <input
+    type="file"
+    class="opacity-0 w-full h-full static z-10 cursor-pointer"
+    (change)="onFileSelected($event)"
+  /><span
     class="material-icons text-neutral-800 text-5xl select-none absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
     >add</span
   >
   } @if (file) {
-  <img [src]="file" class="z-10 absolute" />
-  <input type="file" class="opacity-0 w-full h-full cursor-pointer z-20" (change)="onFileSelected($event)" />
+  <img [src]="file" class="z-10 absolute max-h-44" />
+  <input
+    type="file"
+    class="opacity-0 w-full h-full cursor-pointer z-40 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
+    (change)="onFileSelected($event)"
+  />
   <span
-    class="material-icons text-neutral-800 text-5xl select-none absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30"
+    class="material-icons text-neutral-800 text-sm select-none absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-30 rounded-full bg-neutral-400 bg-opacity-60 p-2"
     >edit</span
   >
   }
