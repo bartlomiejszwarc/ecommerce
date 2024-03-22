@@ -17,4 +17,5 @@ export const routes: Routes = [
   { path: 'categories', component: CategoriesPageComponent },
   { path: 'create', component: CreateItemPageComponent },
   { path: 'category/:category/:subcategory', component: ResultsPageComponent },
+  { path: 'search/:keyword', component: ResultsPageComponent },
 ];
