@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map } from 'rxjs';
+import { ResultsItemCardComponent } from '../../components/results-item-card/results-item-card.component';
 
 @Component({
   selector: 'app-results-page',
   standalone: true,
-  imports: [],
+  imports: [ResultsItemCardComponent],
   templateUrl: './results-page.component.html',
   styleUrl: './results-page.component.css',
 })
@@ -15,7 +15,7 @@ export class ResultsPageComponent {
   category!: string;
   keyword!: string;
   urlPath!: string;
-  resultsAmount: number = 0;
+  resultsAmount: number = 1;
   ngOnInit() {
     this.route.url.subscribe((url) => {
       this.urlPath = url[0].path;
