@@ -21,7 +21,7 @@ export const categories: ICategory[] = [
     category: 'Sports',
     subcategories: [
       'Gym and fitness',
-      'Runnning',
+      'Running',
       'Team sports',
       'Camping and touring',
       'Bicycling',

@@ -7,6 +7,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    importProvidersFrom([provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth())]),
+    importProvidersFrom([
+      provideFirebaseApp(() => initializeApp(environment.firebase)),
+      provideAuth(() => getAuth()),
+      provideFirestore(() => getFirestore()),
+      provideStorage(() => getStorage()),
+    ]),
   ],
 };

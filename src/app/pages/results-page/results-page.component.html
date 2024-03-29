@@ -3,7 +3,7 @@
   <span class="text-2xl md:text-3xl uppercase font-jost font-bold text-neutral-600"
     >{{ category }} &#8250; {{ subcategory }}
   </span>
-  <span class="uppercase font-jost font-bold text-neutral-600 text-base">{{ resultsAmount }} results</span>
+  <span class="uppercase font-jost font-bold text-neutral-600 text-base">{{ results.length }} results</span>
 </div>
 } @if (this.urlPath === 'search'){
 <div class="flex flex-col md:items-end md:flex-row md:space-x-2">
@@ -14,7 +14,8 @@
 </div>
 } @if (resultsAmount > 0){
 <div class="py-4 flex flex-col space-y-4">
-  <app-results-item-card />
-  <app-results-item-card />
+  @for(item of results; track item){
+  <app-results-item-card [item]="item" />
+  }
 </div>
 }

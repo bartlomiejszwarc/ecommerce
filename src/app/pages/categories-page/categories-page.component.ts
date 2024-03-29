@@ -11,7 +11,4 @@ import { categories, ICategory } from '../../../assets/categories/categories';
 })
 export class CategoriesPageComponent {
   categories: ICategory[] = categories;
-  ngOnInit(): void {
-    console.log(this.categories);
-  }
 }

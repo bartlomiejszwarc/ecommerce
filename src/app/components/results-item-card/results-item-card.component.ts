@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { IItem, ItemService } from './../../services/item/item.service';
 
 @Component({
@@ -9,5 +9,5 @@ import { IItem, ItemService } from './../../services/item/item.service';
   styleUrl: './results-item-card.component.css',
 })
 export class ResultsItemCardComponent {
-  item = input<IItem>;
+  @Input() item!: IItem;
 }

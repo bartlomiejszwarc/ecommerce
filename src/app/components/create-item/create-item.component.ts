@@ -1,9 +1,9 @@
-import { Component, NgZone, ViewChild, ViewEncapsulation, WritableSignal, inject, signal } from '@angular/core';
+import { Component, NgZone, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IItem, ItemService } from './../../services/item/item.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -47,15 +47,15 @@ export class CreateItemComponent {
   itemService = inject(ItemService);
   authService = inject(AuthService);
 
-  itemName: string = 'This is my first product';
+  itemName: string = '';
   itemNameMaxLength: number = 100;
-  itemDescription: string =
-    'This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. This is a description of my first product. ';
+  itemDescription: string = '';
   itemDescriptionMaxLength: number = 1000;
   itemImagesArray: any[] = [];
+  itemImagesToUploadArray: Blob[] = [];
   itemImagesArrayMaxLength: number = 3;
   array = Array.from({ length: this.itemImagesArrayMaxLength }, (_, index) => index);
-  itemPrice: number = 21.37;
+  itemPrice: number = 0;
   itemIsNew: boolean = false;
   itemCategory: string = '';
   itemSubcategory: string = '';
@@ -64,19 +64,24 @@ export class CreateItemComponent {
   categories: ICategory[] = categories;
 
   onCreateItem = async () => {
-    const userId = this.authService.currentUser()?.uid;
+    try {
+      const userId = this.authService.currentUser()?.uid;
+      if (!userId) throw new Error('User not found');
+      //const base64ImagesArray = await Promise.all(this.itemImagesArray.map(this.blobToBase64));
 
-    const data: IItem = {
-      userId: userId!,
-      name: this.itemName,
-      description: this.itemDescription,
-      imagesArray: this.itemImagesArray,
-      price: this.itemPrice,
-      isNew: this.itemIsNew,
-      itemCategory: this.itemCategory,
-      itemSubcategory: this.itemSubcategory,
-    };
-    this.itemService.createItem(data);
+      const data: IItem = {
+        userId: userId!,
+        name: this.itemName,
+        description: this.itemDescription,
+        imagesArray: this.itemImagesToUploadArray,
+        imagesUrls: null,
+        price: this.itemPrice,
+        isNew: this.itemIsNew,
+        itemCategory: this.itemCategory,
+        itemSubcategory: this.itemSubcategory,
+      };
+      this.itemService.createItem(data);
+    } catch (e) {}
   };
 
   onChange(price: string) {
@@ -103,8 +108,10 @@ export class CreateItemComponent {
     this.itemSubcategory = subcategory.value;
   }
 
-  pushImageToArray(image: any, index: number) {
+  pushImageToArray(image: File, index: number) {
     const file = URL.createObjectURL(image);
     this.itemImagesArray.splice(index, 1, file);
+    const blob = image.slice(0, image.size, image.type);
+    this.itemImagesToUploadArray.splice(index, 1, blob);
   }
 }
