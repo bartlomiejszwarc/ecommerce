@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, getDocs, query, where } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { addDoc } from 'firebase/firestore';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 
 export interface IItem {
+  id?: string;
   userId: string;
   name: string;
   description: string;
@@ -56,13 +57,27 @@ export class ItemService {
     }
   }
 
-  getProductsBySubcategory(subcategory: string): Observable<IItem[]> {
+  async getProductsBySubcategory(subcategory: string): Promise<Observable<IItem[]>> {
+    const items: IItem[] = [];
     const q = query(this.productsCollection, where('itemSubcategory', '==', subcategory));
-    return collectionData(q) as Observable<IItem[]>;
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const id = doc.id;
+      const data = doc.data() as IItem;
+      items.push({ id, ...data });
+    });
+    return of(items);
   }
 
-  getProductsByCategory(category: string): Observable<IItem[]> {
-    const q = query(this.productsCollection, where('itemSubcategory', '==', category));
-    return collectionData(q) as Observable<IItem[]>;
+  async getProductsByCategory(category: string): Promise<Observable<IItem[]>> {
+    const items: IItem[] = [];
+    const q = query(this.productsCollection, where('itemCategory', '==', category));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const id = doc.id;
+      const data = doc.data() as IItem;
+      items.push({ id, ...data });
+    });
+    return of(items);
   }
 }

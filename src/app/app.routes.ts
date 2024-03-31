@@ -7,6 +7,7 @@ import { FavoritesPageComponent } from './pages/favorites-page/favorites-page.co
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { CreateItemPageComponent } from './pages/create-item-page/create-item-page.component';
 import { ResultsPageComponent } from './pages/results-page/results-page.component';
+import { ItemPageComponent } from './pages/item-page/item-page.component';
 
 export const routes: Routes = [
   { path: 'signup', component: SignupPageComponent },
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'create', component: CreateItemPageComponent },
   { path: 'category/:category/:subcategory', component: ResultsPageComponent },
   { path: 'search/:keyword', component: ResultsPageComponent },
+  { path: 'sale/:id', component: ItemPageComponent },
 ];

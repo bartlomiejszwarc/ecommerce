@@ -31,14 +31,14 @@ export class ResultsPageComponent {
     });
   }
 
-  getResults = () => {
+  getResults = async () => {
     if (this.category && !this.subcategory) {
-      this.itemService.getProductsByCategory(this.category).subscribe((res) => {
+      (await this.itemService.getProductsByCategory(this.category)).subscribe((res) => {
         this.results = res;
       });
     }
     if (this.category && this.subcategory) {
-      this.itemService.getProductsBySubcategory(this.subcategory).subscribe((res) => {
+      (await this.itemService.getProductsBySubcategory(this.subcategory)).subscribe((res) => {
         this.results = res;
       });
     }
