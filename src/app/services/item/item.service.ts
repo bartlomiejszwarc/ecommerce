@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { addDoc } from 'firebase/firestore';
 import { Observable, from, of } from 'rxjs';
@@ -79,5 +79,17 @@ export class ItemService {
       items.push({ id, ...data });
     });
     return of(items);
+  }
+
+  async getItemById(id: string): Promise<Observable<IItem | null>> {
+    const docRef = doc(this.firestore, 'products', id);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      const item = docSnapshot.data() as IItem;
+      return of(item);
+    } else {
+      return of(null);
+    }
   }
 }

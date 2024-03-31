@@ -1,0 +1,11 @@
+@if (item){
+<div class="flex flex-col lg:flex-row lg:space-x-4 w-full">
+  <div class="flex flex-col w-full lg:w-3/4 px-3 bg-neutral-100">
+    <span class="text-xl md:text-2xl">{{ item.name }}</span>
+    <app-item-details-images [images]="item!.imagesUrls" />
+  </div>
+  <div class="w-full lg:w-1/4">
+    <app-seller-info-card />
+  </div>
+</div>
+}
