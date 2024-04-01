@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { IItem } from '../../services/item/item.service';
 import { ItemDetailsImagesComponent } from './item-details-images/item-details-images.component';
 import { SellerInfoCardComponent } from './seller-info-card/seller-info-card.component';
@@ -12,4 +12,12 @@ import { SellerInfoCardComponent } from './seller-info-card/seller-info-card.com
 })
 export class ItemDetailsComponent {
   @Input() item!: IItem | null;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['item'] && !changes['item'].firstChange) this.getSellerDetails();
+  }
+
+  getSellerDetails() {
+    console.log(this.item?.userId);
+  }
 }

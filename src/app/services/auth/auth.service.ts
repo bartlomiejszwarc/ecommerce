@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 
 interface IUserCredentialsLogin {
   email: string;
@@ -31,17 +32,27 @@ export class AuthService {
   }
 
   fireAuth = inject(AngularFireAuth);
+  firestore = inject(Firestore);
+  usersCollection = collection(this.firestore, 'users');
   auth = inject(Auth);
   login({ email, password }: IUserCredentialsLogin) {
     return this.fireAuth.signInWithEmailAndPassword(email, password);
   }
 
   async register({ email, displayName, password }: IUserCredentialsRegister): Promise<any> {
-    return this.fireAuth.createUserWithEmailAndPassword(email, password).then((user: any) => {
-      user.user.updateProfile({
-        displayName: displayName,
-      });
-    });
+    try {
+      const userCredential = await this.fireAuth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      if (user) {
+        await user.updateProfile({
+          displayName: displayName,
+        });
+        const userId = user.uid;
+        const data = { userId, email, displayName };
+        await addDoc(this.usersCollection, data);
+      }
+    } catch (e) {}
   }
 
   logout() {
