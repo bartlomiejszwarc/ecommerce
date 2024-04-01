@@ -84,7 +84,6 @@ export class ItemService {
   async getItemById(id: string): Promise<Observable<IItem | null>> {
     const docRef = doc(this.firestore, 'products', id);
     const docSnapshot = await getDoc(docRef);
-
     if (docSnapshot.exists()) {
       const item = docSnapshot.data() as IItem;
       return of(item);
