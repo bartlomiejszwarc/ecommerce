@@ -1,5 +1,5 @@
 @if (images){
-<div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 py-4">
+<!-- <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 py-4">
   @if(images.length > 0){<img
     [src]="images![0]"
     class="w-full md:w-96 aspect-square object-scale-down bg-neutral-100 rounded-lg"
@@ -14,5 +14,20 @@
     <div></div>
     <div></div>
   </div>
+</div> -->
+<div class="relative w-full">
+  <button class="material-icons absolute top-1/2 left-0 translate-y-1/2 text-neutral-700" (click)="setNextImageLeft()">
+    arrow_back_ios_new
+  </button>
+  <img
+    [src]="images![currentImage]"
+    class="w-full md:w-[500px] aspect-square object-scale-down bg-neutral-100 rounded-lg px-10"
+  />
+  <button
+    class="material-icons absolute top-1/2 right-0 translate-y-1/2 text-neutral-700"
+    (click)="setNextImageRight()"
+  >
+    arrow_forward_ios
+  </button>
 </div>
 }

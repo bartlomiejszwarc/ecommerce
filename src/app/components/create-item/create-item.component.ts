@@ -57,6 +57,7 @@ export class CreateItemComponent {
   array = Array.from({ length: this.itemImagesArrayMaxLength }, (_, index) => index);
   itemPrice: number = 0;
   itemIsNew: boolean = false;
+  itemIsSalePrivate: boolean = true;
   itemCategory: string = '';
   itemSubcategory: string = '';
   currentCategory: any;
@@ -79,6 +80,8 @@ export class CreateItemComponent {
         isNew: this.itemIsNew,
         itemCategory: this.itemCategory,
         itemSubcategory: this.itemSubcategory,
+        createdAt: new Date(),
+        isSalePrivate: this.itemIsSalePrivate,
       };
       this.itemService.createItem(data);
     } catch (e) {}

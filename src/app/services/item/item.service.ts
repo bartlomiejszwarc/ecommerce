@@ -15,6 +15,8 @@ export interface IItem {
   isNew: boolean;
   itemCategory: string;
   itemSubcategory: string;
+  createdAt: Date;
+  isSalePrivate: boolean;
 }
 
 @Injectable({
@@ -35,6 +37,8 @@ export class ItemService {
     isNew,
     itemCategory,
     itemSubcategory,
+    createdAt,
+    isSalePrivate,
   }: IItem): Promise<Observable<any>> {
     //
     try {
@@ -45,11 +49,22 @@ export class ItemService {
           const storageRef = ref(this.storage, filePath);
           const uploadTask = await uploadBytes(storageRef, image);
           const downloadUrl = await getDownloadURL(uploadTask.ref);
-          imagesUrls.push(downloadUrl);
+          imagesUrls[index] = downloadUrl;
         }),
       );
       //
-      const itemToCreate = { userId, name, description, imagesUrls, price, isNew, itemCategory, itemSubcategory };
+      const itemToCreate = {
+        userId,
+        name,
+        description,
+        imagesUrls,
+        price,
+        isNew,
+        itemCategory,
+        itemSubcategory,
+        createdAt,
+        isSalePrivate,
+      };
       const promise = addDoc(this.productsCollection, itemToCreate).then((res) => res);
       return from(promise);
     } catch (e) {

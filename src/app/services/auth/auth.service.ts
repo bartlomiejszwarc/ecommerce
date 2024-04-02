@@ -48,8 +48,9 @@ export class AuthService {
         await user.updateProfile({
           displayName: displayName,
         });
+        const createdAt = new Date();
         const userId = user.uid;
-        const data = { userId, email, displayName };
+        const data = { userId, email, displayName, createdAt };
         await addDoc(this.usersCollection, data);
       }
     } catch (e) {}

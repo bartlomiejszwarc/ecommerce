@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, getDoc, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 
 export interface IUser {
@@ -7,6 +7,8 @@ export interface IUser {
   email: string;
   displayName: string;
   phoneNumber?: string;
+  createdAt: Date;
+  location: string;
 }
 
 @Injectable({

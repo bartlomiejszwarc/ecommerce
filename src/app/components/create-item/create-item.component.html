@@ -44,10 +44,16 @@
         </mat-select>
       </mat-form-field>
       }
-      <mat-radio-group aria-label="Select an option" class="flex flex-col" [(ngModel)]="itemIsNew">
-        <mat-radio-button [value]="true">Brand new</mat-radio-button>
-        <mat-radio-button [value]="false">Pre-owned</mat-radio-button>
-      </mat-radio-group>
+      <div class="flex space-x-10">
+        <mat-radio-group aria-label="Select an option" class="flex flex-col" [(ngModel)]="itemIsNew">
+          <mat-radio-button [value]="false">Used</mat-radio-button>
+          <mat-radio-button [value]="true">Brand new</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group aria-label="Select an option" class="flex flex-col" [(ngModel)]="itemIsSalePrivate">
+          <mat-radio-button [value]="true">Private</mat-radio-button>
+          <mat-radio-button [value]="false">Company</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
       <div class="w-full flex justify-end">
         <button class="text-cyan-600 font-medium rounded-sm hover:bg-neutral-100 px-4 py-1" matStepperNext>Next</button>
