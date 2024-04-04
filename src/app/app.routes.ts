@@ -14,6 +14,8 @@ export const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: 'home', component: HomePageComponent },
   { path: 'account', component: AccountPageComponent },
+  { path: 'account/:tab', component: AccountPageComponent },
+  { path: 'account/:nonexisting', component: AccountPageComponent },
   { path: 'favorites', component: FavoritesPageComponent },
   { path: 'categories', component: CategoriesPageComponent },
   { path: 'create', component: CreateItemPageComponent },
