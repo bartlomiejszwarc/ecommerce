@@ -14,6 +14,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ButtonFormSubmitComponent } from '../button-form-submit/button-form-submit.component';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ICategory, categories } from '../../../assets/categories/categories';
+import { CreateItemFinishedBoardComponent } from './create-item-finished-board/create-item-finished-board.component';
 
 @Component({
   selector: 'app-create-item',
@@ -31,6 +32,7 @@ import { ICategory, categories } from '../../../assets/categories/categories';
     MatRadioModule,
     ButtonFormSubmitComponent,
     MatSelectModule,
+    CreateItemFinishedBoardComponent,
   ],
   templateUrl: './create-item.component.html',
   styleUrl: './create-item.component.css',
@@ -61,6 +63,7 @@ export class CreateItemComponent {
   itemCategory: string = '';
   itemSubcategory: string = '';
   currentCategory: any;
+  isCreationFinished: boolean = false;
 
   categories: ICategory[] = categories;
 
@@ -68,7 +71,6 @@ export class CreateItemComponent {
     try {
       const userId = this.authService.currentUser()?.uid;
       if (!userId) throw new Error('User not found');
-      //const base64ImagesArray = await Promise.all(this.itemImagesArray.map(this.blobToBase64));
 
       const data: IItem = {
         userId: userId!,
@@ -83,7 +85,10 @@ export class CreateItemComponent {
         createdAt: new Date(),
         isSalePrivate: this.itemIsSalePrivate,
       };
-      this.itemService.createItem(data);
+      (await this.itemService.createItem(data)).subscribe({
+        error: (err) => console.log(err),
+        complete: () => (this.isCreationFinished = true),
+      });
     } catch (e) {}
   };
 

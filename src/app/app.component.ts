@@ -14,5 +14,5 @@ import { NavbarComponent } from './components/navbar/navbar/navbar.component';
 export class AppComponent {
   router = inject(Router);
 
-  title = 'salehub';
+  title = 'eSale';
 }

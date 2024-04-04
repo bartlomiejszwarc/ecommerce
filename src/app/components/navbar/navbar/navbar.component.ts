@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { LogoComponent } from '../../logo/logo.component';
 import { RouterModule } from '@angular/router';
