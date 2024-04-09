@@ -12,6 +12,12 @@ export interface IUser {
   location: string;
 }
 
+export interface IUpdateUserData {
+  displayName: string;
+  phoneNumber?: string;
+  location?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,5 +50,9 @@ export class UserService {
       });
       return productsArray;
     } else return null;
+  }
+
+  async updateUserData(user: IUpdateUserData) {
+    console.log(user);
   }
 }

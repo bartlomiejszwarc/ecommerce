@@ -1,0 +1,9 @@
+mat-form-field {
+  width: 24rem;
+}
+
+@media (width <= 768px) {
+  mat-form-field {
+    width: 90%;
+  }
+}
