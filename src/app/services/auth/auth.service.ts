@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
@@ -37,6 +37,14 @@ export class AuthService {
   auth = inject(Auth);
   login({ email, password }: IUserCredentialsLogin) {
     return this.fireAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  async getCurrentUserData() {
+    return new Observable((observer) => {
+      onAuthStateChanged(this.auth, (user) => {
+        observer.next(user);
+      });
+    });
   }
 
   async register({ email, displayName, password }: IUserCredentialsRegister): Promise<any> {
