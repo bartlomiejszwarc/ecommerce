@@ -1,22 +1,36 @@
-<form class="w-full flex flex-col items-center space-y-6">
+<form class="w-full flex flex-col items-center space-y-6 bg-neutral-100 py-10 rounded-lg">
   <mat-form-field>
+    <mat-icon matPrefix class="text-neutral-500">mail</mat-icon>
     <mat-label>E-mail</mat-label>
-    <input matInput disabled value="{{ user?.email }}" />
+    <input matInput readonly value="{{ user?.email }}" />
   </mat-form-field>
   <mat-form-field>
+    <mat-icon matPrefix class="text-neutral-500">account_circle</mat-icon>
     <mat-label>Name</mat-label>
-    <input matInput value="{{ user?.displayName }}" />
+    <input
+      matInput
+      value="{{ user?.displayName }}"
+      placeholder="John Doe"
+      #item
+      (change)="onDisplayNameChange(this.item.value)"
+    />
   </mat-form-field>
   <mat-form-field>
+    <mat-icon matPrefix class="text-neutral-500">location_on</mat-icon>
     <mat-label>Location</mat-label>
-    <input matInput value="{{ user?.location }}" />
+    <input
+      matInput
+      value="{{ user?.location }}"
+      placeholder="Los Angeles, Venice Beach 21"
+      #item
+      (change)="onLocationChange(this.item.value)"
+    />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Phone number</mat-label>
-    <span matTextPrefix>+48 &nbsp;</span>
-    <input type="tel" matInput placeholder="123-456-798" />
-    <mat-icon matSuffix>phone</mat-icon>
+    <mat-icon matPrefix class="text-neutral-500">phone</mat-icon>
+    <input type="tel" matInput placeholder="123-456-798" #item (change)="onPhoneNumberChange(this.item.value)" />
   </mat-form-field>
-  <app-button-form-submit buttonText="Save" class="w-36" />
+  <app-button-form-submit buttonText="Save" class="w-36" (click)="updateUserData()" />
 </form>

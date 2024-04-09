@@ -12,4 +12,5 @@ export class UserPanelTabComponent {
   @Input() url!: string;
   @Input() name!: string;
   @Input() icon!: string;
+  @Input() activeTab!: string;
 }

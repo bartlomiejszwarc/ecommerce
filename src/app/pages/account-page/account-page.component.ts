@@ -34,6 +34,8 @@ export class AccountPageComponent {
     this.getUsersProdcuts();
   }
 
+  isTabActive(tab: string) {}
+
   async getUsersProdcuts() {
     (await this.authService.getCurrentUserData()).subscribe((user: any) => {
       if (user) {

@@ -1,4 +1,27 @@
-<button class="flex space-x-1 md:space-x-2 items-center" [routerLink]="['/account', url]">
+<button class="flex flex-col md:hidden space-x-1 md:space-x-2 items-center" [routerLink]="['/account', url]">
   <span class="material-icons text-cyan-600">{{ icon }}</span>
+  @if(activeTab === url){
+  <span class="text-neutral-800 text-sm md:text-base lg:text-xl font-bold">{{ name }}</span>
+  } @else {
   <span class="text-neutral-800 text-sm md:text-base lg:text-xl">{{ name }}</span>
+  } @if(activeTab === url){
+  <span class="w-1/2 h-[1px] bg-neutral-700 mt-1"></span>
+  }
+</button>
+
+<button class="hidden md:flex md:flex-col items-center justify-center space-y-1" [routerLink]="['/account', url]">
+  <div class="flex items-center space-x-2 flex-wrap">
+    <span class="material-icons text-cyan-600">{{ icon }}</span>
+    @if(activeTab === url){
+    <span class="text-neutral-800 text-sm lg:text-base xl:text-xl font-bold">{{ name }}</span>
+    } @else {
+    <span class="text-neutral-800 text-sm lg:text-base xl:text-xl">{{ name }}</span>
+
+    }
+  </div>
+  @if(activeTab === url){
+  <span class="w-[110%] h-[1px] bg-neutral-400"></span>
+  } @else {
+  <span class="w-full h-[1px] bg-transparent"></span>
+  }
 </button>

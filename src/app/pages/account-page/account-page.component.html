@@ -1,6 +1,6 @@
 <div class="flex flex-col md:flex-row space-y-6 md:space-y-0">
   <div class="w-full md:w-56">
-    <app-user-panel-tabs />
+    <app-user-panel-tabs [activeTab]="tab" />
   </div>
   <div class="w-full md:mx-6">
     @if (tab === 'details') {<app-account-page-details [user]="user" />} @if (tab === 'sales') {<app-account-page-sales

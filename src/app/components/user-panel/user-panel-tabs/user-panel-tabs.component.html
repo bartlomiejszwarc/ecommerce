@@ -1,5 +1,5 @@
-<div class="w-full flex flex-row md:flex-col justify-between md:space-y-4 space-x-2 md:space-x-0">
+<div class="w-full flex flex-row md:flex-col justify-between md:items-start md:space-y-4 space-x-2 md:space-x-0">
   @for (tab of tabs; track tab){
-  <app-user-panel-tab [url]="tab.tabUrl" [name]="tab.tabName" [icon]="tab.icon" />
+  <app-user-panel-tab [url]="tab.tabUrl" [name]="tab.tabName" [icon]="tab.icon" [activeTab]="activeTab" />
   }
 </div>

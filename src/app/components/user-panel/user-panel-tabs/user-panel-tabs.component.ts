@@ -1,5 +1,5 @@
 import { UserPanelTabComponent } from './user-panel-tab/user-panel-tab.component';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-panel-tabs',
@@ -9,10 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './user-panel-tabs.component.css',
 })
 export class UserPanelTabsComponent {
+  @Input() activeTab!: string;
   tabs: { tabUrl: string; tabName: string; icon: string }[] = [
     { tabUrl: 'sales', tabName: 'Your sales', icon: 'sell' },
-    { tabUrl: 'details', tabName: 'Account details', icon: 'account_circle' },
-
-    { tabUrl: 'settings', tabName: 'Account settings', icon: 'manage_accounts' },
+    { tabUrl: 'details', tabName: 'Account details', icon: 'account_box' },
+    { tabUrl: 'settings', tabName: 'Settings', icon: 'manage_accounts' },
   ];
 }

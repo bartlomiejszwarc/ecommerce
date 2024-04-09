@@ -1,17 +1,21 @@
 @if (images){
-<div class="relative w-full">
-  <button class="material-icons absolute top-1/2 left-0 translate-y-1/2 text-neutral-700" (click)="setNextImageLeft()">
+<div class="flex flex-col relative w-full h-96 justify-center items-center">
+  <button
+    class="material-icons absolute top-1/2 left-0 translate-y-[-50%] text-neutral-700 m-0"
+    (click)="setNextImageLeft()"
+  >
     arrow_back_ios_new
   </button>
-  <img
-    [src]="images![currentImage]"
-    class="w-full md:w-[500px] aspect-square object-scale-down bg-neutral-100 rounded-lg px-10 slide"
-  />
+  <img [src]="images![currentImage]" class="w-full md:w-96 object-scale-down bg-neutral-100 rounded-lg px-10" />
   <button
-    class="material-icons absolute top-1/2 right-0 translate-y-1/2 text-neutral-700"
+    class="material-icons absolute top-1/2 right-0 translate-y-[-50%] text-neutral-700"
     (click)="setNextImageRight()"
   >
     arrow_forward_ios
   </button>
+  <div class="absolute bottom-0 left-1/2 translate-x-[-50%] pt-4">
+    <span>{{ currentImage + 1 }} of {{ images.length }}</span>
+  </div>
 </div>
+
 }
