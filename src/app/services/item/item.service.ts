@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, getDoc, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, doc, getDoc, getDocs, query, where, addDoc } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
-import { addDoc } from 'firebase/firestore';
 import { Observable, from, of } from 'rxjs';
 
 export interface IItem {

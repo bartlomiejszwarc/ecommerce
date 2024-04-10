@@ -29,12 +29,17 @@ export class AccountPageDetailsComponent {
   ngOnInit() {}
 
   updateUserData() {
-    const user: IUpdateUserData = {
-      displayName: this.displayName,
-      phoneNumber: this.phoneNumber,
-      location: this.location,
-    };
-    this.userService.updateUserData(user);
+    try {
+      if (this.user) {
+        const user: IUpdateUserData = {
+          userId: this.user.userId,
+          displayName: this.displayName,
+          phoneNumber: this.phoneNumber,
+          location: this.location,
+        };
+        this.userService.updateUserData(user);
+      }
+    } catch (e) {}
   }
 
   onDisplayNameChange(displayName: string) {

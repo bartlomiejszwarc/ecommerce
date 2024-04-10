@@ -11,8 +11,8 @@
       matInput
       value="{{ user?.displayName }}"
       placeholder="John Doe"
-      #item
-      (change)="onDisplayNameChange(this.item.value)"
+      #displayName
+      (change)="onDisplayNameChange(this.displayName.value)"
     />
   </mat-form-field>
   <mat-form-field>
@@ -22,15 +22,22 @@
       matInput
       value="{{ user?.location }}"
       placeholder="Los Angeles, Venice Beach 21"
-      #item
-      (change)="onLocationChange(this.item.value)"
+      #location
+      (change)="onLocationChange(this.location.value)"
     />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Phone number</mat-label>
     <mat-icon matPrefix class="text-neutral-500">phone</mat-icon>
-    <input type="tel" matInput placeholder="123-456-798" #item (change)="onPhoneNumberChange(this.item.value)" />
+    <input
+      type="tel"
+      value="{{ user?.phoneNumber }}"
+      matInput
+      placeholder="123-456-798"
+      #phoneNumber
+      (change)="onPhoneNumberChange(this.phoneNumber.value)"
+    />
   </mat-form-field>
   <app-button-form-submit buttonText="Save" class="w-36" (click)="updateUserData()" />
 </form>

@@ -37,9 +37,11 @@ export class AccountPageComponent {
   isTabActive(tab: string) {}
 
   async getUsersProdcuts() {
-    (await this.authService.getCurrentUserData()).subscribe((user: any) => {
+    (await this.authService.getCurrentUserData()).subscribe(async (user: any) => {
       if (user) {
-        this.user = user;
+        (await this.userService.getUserDetailsById(user.uid)).subscribe((user) => {
+          this.user = user;
+        });
         this.userService.getUserProducts(user.uid).then((data) => {
           this.userProducts = data;
         });

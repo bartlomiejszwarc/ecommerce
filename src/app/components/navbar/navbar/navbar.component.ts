@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LogoComponent } from '../../logo/logo.component';
 import { RouterModule } from '@angular/router';
 import { NavbarFieldComponent } from '../navbar-field/navbar-field.component';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,4 +12,6 @@ import { NavbarFieldComponent } from '../navbar-field/navbar-field.component';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  authService = inject(AuthService);
+}
