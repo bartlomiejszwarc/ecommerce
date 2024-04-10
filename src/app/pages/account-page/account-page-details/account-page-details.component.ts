@@ -21,14 +21,18 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './account-page-details.component.css',
 })
 export class AccountPageDetailsComponent {
-  @Input() user: IUser | null = null;
+  user: IUser | null = null;
   userService = inject(UserService);
   displayName!: string;
   phoneNumber!: string;
   location!: string;
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getUser().subscribe((user) => {
+      this.user = user;
+    });
+  }
 
-  updateUserData() {
+  async updateUserData() {
     try {
       if (this.user) {
         const user: IUpdateUserData = {
@@ -37,7 +41,10 @@ export class AccountPageDetailsComponent {
           phoneNumber: this.phoneNumber,
           location: this.location,
         };
-        this.userService.updateUserData(user);
+        (await this.userService.updateUserData(user)).subscribe((data) => {
+          const user: IUser = { ...this.user, ...data };
+          this.userService.setUser(user);
+        });
       }
     } catch (e) {}
   }

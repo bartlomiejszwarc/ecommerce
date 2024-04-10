@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, doc, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IItem } from '../item/item.service';
 
 export interface IUser {
@@ -28,6 +28,16 @@ export class UserService {
   firestore = inject(Firestore);
   usersCollection = collection(this.firestore, 'users');
   productsCollection = collection(this.firestore, 'products');
+
+  userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null);
+
+  setUser(user: IUser | null) {
+    this.userSubject.next(user);
+  }
+
+  getUser(): Observable<IUser | null> {
+    return this.userSubject.asObservable();
+  }
 
   async getUserDetailsById(uid: string): Promise<Observable<IUser | null>> {
     const q = query(this.usersCollection, where('userId', '==', uid));
@@ -72,7 +82,7 @@ export class UserService {
     }
   }
 
-  async updateUserData(user: IUpdateUserData) {
+  async updateUserData(user: IUpdateUserData): Promise<Observable<any>> {
     const q = query(this.usersCollection, where('userId', '==', user.userId));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
@@ -86,7 +96,9 @@ export class UserService {
           phoneNumber: user.phoneNumber ? user.phoneNumber : userDataFromDatabase.phoneNumber,
         };
         await updateDoc(docRef, { ...data });
+        return of(data);
       }
     }
+    return of(null);
   }
 }

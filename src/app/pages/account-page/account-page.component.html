@@ -3,7 +3,7 @@
     <app-user-panel-tabs [activeTab]="tab" />
   </div>
   <div class="w-full md:mx-6">
-    @if (tab === 'details') {<app-account-page-details [user]="user" />} @if (tab === 'sales') {<app-account-page-sales
+    @if (tab === 'details') {<app-account-page-details />} @if (tab === 'sales') {<app-account-page-sales
       [userProducts]="userProducts"
     />} @if (tab ==='settings') {<app-account-page-settings />} @else {
     <div></div>
