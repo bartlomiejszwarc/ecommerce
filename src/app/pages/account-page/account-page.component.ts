@@ -34,16 +34,10 @@ export class AccountPageComponent {
     this.getUsersProdcuts();
   }
 
-  isTabActive(tab: string) {}
-
   async getUsersProdcuts() {
-    (await this.authService.getCurrentUserData()).subscribe(async (user: any) => {
+    this.userService.getUser().subscribe(async (user) => {
       if (user) {
-        (await this.userService.getUserDetailsById(user.uid)).subscribe((user) => {
-          //this.user = user;
-          this.userService.setUser(user);
-        });
-        this.userService.getUserProducts(user.uid).then((data) => {
+        this.userService.getUserProducts(user.userId).then((data) => {
           this.userProducts = data;
         });
       }

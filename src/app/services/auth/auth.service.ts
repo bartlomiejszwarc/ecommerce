@@ -1,7 +1,13 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, of } from 'rxjs';
-import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+  User,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 
@@ -20,7 +26,7 @@ interface IUserCredentialsRegister {
 })
 export class AuthService {
   currentUser = signal<User | null>(null);
-  constructor(private router: Router) {
+  constructor() {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUser.set(user);
       // if (this.currentUser()) {
@@ -31,12 +37,11 @@ export class AuthService {
     });
   }
 
-  fireAuth = inject(AngularFireAuth);
   firestore = inject(Firestore);
-  usersCollection = collection(this.firestore, '/users');
+  usersCollection = collection(this.firestore, 'users');
   auth = inject(Auth);
   login({ email, password }: IUserCredentialsLogin) {
-    return this.fireAuth.signInWithEmailAndPassword(email, password);
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   async getCurrentUserData() {
@@ -49,22 +54,21 @@ export class AuthService {
 
   async register({ email, displayName, password }: IUserCredentialsRegister): Promise<any> {
     try {
-      const userCredential = await this.fireAuth.createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-
-      if (user) {
-        await user.updateProfile({
-          displayName: displayName,
-        });
-        const createdAt = new Date();
-        const userId = user.uid;
-        const data = { userId, email, displayName, createdAt };
-        await addDoc(this.usersCollection, data);
-      }
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password).then(async (response) => {
+        if (response) {
+          await updateProfile(response.user, {
+            displayName: displayName,
+          });
+          const createdAt = new Date();
+          const userId = response.user.uid;
+          const data = { userId, email, displayName, createdAt };
+          await addDoc(this.usersCollection, data);
+        }
+      });
     } catch (e) {}
   }
 
   logout() {
-    return this.fireAuth.signOut();
+    //return this.fireAuth.signOut();
   }
 }
