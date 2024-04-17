@@ -22,9 +22,7 @@ export interface IItem {
   providedIn: 'root',
 })
 export class ItemService {
-  constructor() {
-    console.log('ItemService');
-  }
+  constructor() {}
   firestore = inject(Firestore);
   storage = inject(Storage);
   productsCollection = collection(this.firestore, 'products');
@@ -102,7 +100,7 @@ export class ItemService {
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
       const item = docSnapshot.data() as IItem;
-      return of(item);
+      return of({ id, ...item });
     } else {
       return of(null);
     }
