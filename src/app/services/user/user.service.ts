@@ -69,33 +69,62 @@ export class UserService {
   }
 
   async addToFavorites(itemId: string) {
-    this.getUser().subscribe(async (user) => {
-      const q = query(this.usersCollection, where('userId', '==', user!.userId));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
-        const userRef = querySnapshot.docs[0];
-        if (userRef) {
-          const docRef = doc(this.usersCollection, userRef.id);
-          if (userDataFromDatabase.favorites) {
-            const favoritesArray = Array.from(userDataFromDatabase.favorites);
-            favoritesArray.push(itemId);
+    const user = this.userSubject.getValue();
+    const q = query(this.usersCollection, where('userId', '==', user!.userId));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
+      const userRef = querySnapshot.docs[0];
+      if (userRef) {
+        const docRef = doc(this.usersCollection, userRef.id);
+        if (userDataFromDatabase.favorites) {
+          const favoritesArray = Array.from(userDataFromDatabase.favorites);
+          favoritesArray.push(itemId);
+          const data = {
+            favorites: favoritesArray,
+          };
 
-            const data = {
-              favorites: favoritesArray,
-            };
-            await updateDoc(docRef, data);
-          } else {
-            const favoritesArray = [];
-            favoritesArray.push(itemId);
-            const data = {
-              favorites: favoritesArray,
-            };
-            await updateDoc(docRef, data);
-          }
+          await updateDoc(docRef, data);
+          const user = this.userSubject.getValue();
+          user!.favorites = favoritesArray;
+          this.userSubject.next(user);
+        } else {
+          const favoritesArray = [];
+          favoritesArray.push(itemId);
+          const data = {
+            favorites: favoritesArray,
+          };
+
+          await updateDoc(docRef, data);
+          const user = this.userSubject.getValue();
+          user!.favorites = favoritesArray;
+          this.userSubject.next(user);
         }
       }
-    });
+    }
+  }
+  async removeFromFavorites(itemId: string) {
+    const user = this.userSubject.getValue();
+    const q = query(this.usersCollection, where('userId', '==', user!.userId));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
+      const userRef = querySnapshot.docs[0];
+      if (userRef) {
+        const docRef = doc(this.usersCollection, userRef.id);
+        if (userDataFromDatabase.favorites) {
+          const favoritesArray = Array.from(userDataFromDatabase.favorites);
+          const favoritesArrayUpdated = favoritesArray.filter((id) => id !== itemId);
+          const data = {
+            favorites: favoritesArrayUpdated,
+          };
+          const user = this.userSubject.getValue();
+          user!.favorites = favoritesArrayUpdated;
+          this.userSubject.next(user);
+          await updateDoc(docRef, data);
+        }
+      }
+    }
   }
 
   async updateUserData(user: IUpdateUserData): Promise<Observable<any>> {

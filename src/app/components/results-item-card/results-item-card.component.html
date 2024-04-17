@@ -19,9 +19,15 @@
   </div>
   <div class="flex flex-col justify-between items-end">
     <span class="text-base md:text-xl">${{ item.price }}</span>
-    <span class="material-icons text-neutral-800 cursor-pointer" (click)="addToFavorites(this.item.id)"
+    @if (!checkIfIsFavorite()){
+    <span class="material-icons text-rose-600 cursor-pointer" (click)="addToFavorites(this.item.id)"
       >favorite_outline</span
     >
+    } @else {
+    <span class="material-icons text-rose-600 cursor-pointer" (click)="removeFromFavorites(this.item.id)"
+      >favorite</span
+    >
+    }
   </div>
 </div>
 }
