@@ -8,13 +8,19 @@ import { CategoriesPageComponent } from './pages/categories-page/categories-page
 import { CreateItemPageComponent } from './pages/create-item-page/create-item-page.component';
 import { ResultsPageComponent } from './pages/results-page/results-page.component';
 import { ItemPageComponent } from './pages/item-page/item-page.component';
-import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['home']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 export const routes: Routes = [
   { path: 'signup', component: SignupPageComponent },
-  { path: '', component: LoginPageComponent },
+  {
+    path: '',
+    component: LoginPageComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
+  },
   { path: 'home', component: HomePageComponent },
   {
     path: 'account',

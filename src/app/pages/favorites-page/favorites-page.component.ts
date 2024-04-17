@@ -15,6 +15,7 @@ export class FavoritesPageComponent {
   itemService = inject(ItemService);
   userId!: string;
   favorites: IItem[] = [];
+  itemsLoaded: boolean = false;
 
   async ngOnInit() {
     this.getUsersFavorites();
@@ -26,8 +27,17 @@ export class FavoritesPageComponent {
       this.favorites = [];
       if (user) {
         for (const id of user?.favorites) {
-          (await this.itemService.getItemById(id)).subscribe((item) => {
-            this.favorites.push(item as IItem);
+          (await this.itemService.getItemById(id)).subscribe({
+            next: (item) => {
+              this.itemsLoaded = false;
+              this.favorites.push(item as IItem);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+            complete: () => {
+              this.itemsLoaded = true;
+            },
           });
         }
         userSubscription.unsubscribe();
