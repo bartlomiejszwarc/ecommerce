@@ -17,10 +17,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     importProvidersFrom([
-      provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideAuth(() => getAuth()),
-      provideFirestore(() => getFirestore()),
       provideStorage(() => getStorage()),
+      provideFirebaseApp(() => initializeApp(environment.firebase)),
+      provideFirestore(() => getFirestore()),
     ]),
   ],
 };

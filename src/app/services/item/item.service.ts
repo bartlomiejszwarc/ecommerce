@@ -22,7 +22,9 @@ export interface IItem {
   providedIn: 'root',
 })
 export class ItemService {
-  constructor() {}
+  constructor() {
+    console.log('ItemService');
+  }
   firestore = inject(Firestore);
   storage = inject(Storage);
   productsCollection = collection(this.firestore, 'products');

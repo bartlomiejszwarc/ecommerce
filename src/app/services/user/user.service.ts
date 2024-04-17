@@ -1,9 +1,12 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, effect, inject } from '@angular/core';
 import { Firestore, collection, doc, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IItem } from '../item/item.service';
+import { AuthService } from '../auth/auth.service';
 
 export interface IUser {
+  favorites: any;
+  id?: string;
   uid: string;
   userId: string;
   email: string;
@@ -26,6 +29,7 @@ export interface IUpdateUserData {
 export class UserService {
   constructor() {}
   firestore = inject(Firestore);
+  authService = inject(AuthService);
   usersCollection = collection(this.firestore, 'users');
   productsCollection = collection(this.firestore, 'products');
 
@@ -64,22 +68,34 @@ export class UserService {
     } else return null;
   }
 
-  async addToFavorites(uid: string, itemId: string) {
-    var userRef;
-    const q = query(this.usersCollection, where('userId', '==', uid));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      querySnapshot.forEach((doc) => {
-        userRef = doc;
-      });
-      if (userRef) {
-        const docRef = doc(this.usersCollection, userRef['id']);
-        const data = {
-          location: itemId,
-        };
-        await updateDoc(docRef, data);
+  async addToFavorites(itemId: string) {
+    this.getUser().subscribe(async (user) => {
+      const q = query(this.usersCollection, where('userId', '==', user!.userId));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
+        const userRef = querySnapshot.docs[0];
+        if (userRef) {
+          const docRef = doc(this.usersCollection, userRef.id);
+          if (userDataFromDatabase.favorites) {
+            const favoritesArray = Array.from(userDataFromDatabase.favorites);
+            favoritesArray.push(itemId);
+
+            const data = {
+              favorites: favoritesArray,
+            };
+            await updateDoc(docRef, data);
+          } else {
+            const favoritesArray = [];
+            favoritesArray.push(itemId);
+            const data = {
+              favorites: favoritesArray,
+            };
+            await updateDoc(docRef, data);
+          }
+        }
       }
-    }
+    });
   }
 
   async updateUserData(user: IUpdateUserData): Promise<Observable<any>> {

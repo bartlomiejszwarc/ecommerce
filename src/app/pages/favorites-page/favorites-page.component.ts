@@ -13,10 +13,5 @@ export class FavoritesPageComponent {
   userService = inject(UserService);
   authService = inject(AuthService);
   userId!: string;
-  async ngOnInit() {
-    (await this.authService.getCurrentUserData()).subscribe(async (data: any) => {
-      this.userId = data.uid;
-      await this.userService.addToFavorites(this.userId, '123');
-    });
-  }
+  async ngOnInit() {}
 }

@@ -33,7 +33,7 @@ export class AuthService {
 
   fireAuth = inject(AngularFireAuth);
   firestore = inject(Firestore);
-  usersCollection = collection(this.firestore, 'users');
+  usersCollection = collection(this.firestore, '/users');
   auth = inject(Auth);
   login({ email, password }: IUserCredentialsLogin) {
     return this.fireAuth.signInWithEmailAndPassword(email, password);
