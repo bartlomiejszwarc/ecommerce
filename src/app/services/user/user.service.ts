@@ -14,6 +14,7 @@ export interface IUser {
   phoneNumber?: string;
   createdAt: Date;
   location: string;
+  lastVisitedProducts?: string[];
 }
 
 export interface IUpdateUserData {
@@ -124,6 +125,52 @@ export class UserService {
           await updateDoc(docRef, data);
         }
       }
+    }
+  }
+
+  async addToLastVisitedProducts(itemId: string) {
+    if (!this.userSubject) {
+      //TODO
+      const currentProducts = localStorage.getItem('lastVisitedProducts');
+      if (currentProducts) {
+        const parsedProducts = JSON.parse(currentProducts);
+        const arrayFromParsedProducts = Array.from([parsedProducts]);
+        const updatedArray = arrayFromParsedProducts.filter((id) => id !== itemId);
+        updatedArray.push(itemId);
+        localStorage.setItem('lastVisitedProducts', JSON.stringify(updatedArray));
+      } else {
+        localStorage.setItem('lastVisitedProducts', JSON.stringify(itemId));
+        const products = localStorage.getItem('lastVisitedProducts');
+      }
+    } else {
+      const userSubscription = this.getUser().subscribe(async (user) => {
+        const q = query(this.usersCollection, where('userId', '==', user!.userId));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
+          const userRef = querySnapshot.docs[0];
+          if (userRef) {
+            const docRef = doc(this.usersCollection, userRef.id);
+            if (userDataFromDatabase.lastVisitedProducts) {
+              const lastVisitedProducts = Array.from(userDataFromDatabase.lastVisitedProducts);
+              const updatedArray = lastVisitedProducts.filter((id) => id !== itemId);
+              updatedArray.unshift(itemId);
+              const slicedUpdatedArray = updatedArray.slice(0, 5);
+              const data = {
+                lastVisitedProducts: slicedUpdatedArray,
+              };
+              await updateDoc(docRef, data);
+            } else {
+              const lastVisitedProducts = [];
+              lastVisitedProducts.push(itemId);
+              const data = {
+                lastVisitedProducts: lastVisitedProducts,
+              };
+              await updateDoc(docRef, data);
+            }
+          }
+        }
+      });
     }
   }
 
