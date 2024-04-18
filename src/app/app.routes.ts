@@ -19,6 +19,7 @@ export const routes: Routes = [
     path: '',
     component: LoginPageComponent,
     canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     data: { authGuardPipe: redirectLoggedInToHome },
   },
   { path: 'home', component: HomePageComponent },

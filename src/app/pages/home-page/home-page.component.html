@@ -1,8 +1,13 @@
-<p>
-  Here: top categories with graphics and auto slide, search bar, last looked items (max 5), popular on (based on most
-  products)
-</p>
+<p>Here: top categories with graphics and auto slide, popular on (based on most products)</p>
 
-<div class="flex-none flex-col items-center">
-  <app-search-bar></app-search-bar>
+@if(user){
+<div class="flex-col flex justify-center">
+  <div class="mt-4 flex flex-col space-y-5 justify-center w-full">
+    <app-search-bar
+      class="w-full flex justify-between items-center rounded-full border-2 border-neutral-400 h-12 pr-3 pl-6"
+    />
+    <div class="h-64 bg-purple-500 w-full">Top categories</div>
+    <app-last-visited-products-list [products]="user!.lastVisitedProducts" />
+  </div>
 </div>
+}
