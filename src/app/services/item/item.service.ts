@@ -1,8 +1,33 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, getDoc, getDocs, query, where, addDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  addDoc,
+  collectionData,
+  setDoc,
+  updateDoc,
+  CollectionReference,
+  QueryDocumentSnapshot,
+} from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
-import { Observable, from, of } from 'rxjs';
+import { BehaviorSubject, Observable, from, map, of } from 'rxjs';
 
+// export interface ICategoriesStats {
+//   Electronics?: number;
+//   Sports?: number;
+//   Music?: number;
+//   'Video games'?: number;
+//   'Home and garden'?: number;
+//   'Clothes and fashion'?: number;
+// }
+export interface ICategoriesStats {
+  itemCategory?: string;
+}
 export interface IItem {
   id?: string;
   userId: string;
@@ -26,6 +51,7 @@ export class ItemService {
   firestore = inject(Firestore);
   storage = inject(Storage);
   productsCollection = collection(this.firestore, 'products');
+  productsStatisticsCollection = collection(this.firestore, 'productsStatistics');
 
   async createItem({
     userId,
@@ -51,7 +77,7 @@ export class ItemService {
           imagesUrls[index] = downloadUrl;
         }),
       );
-      //
+
       const itemToCreate = {
         userId,
         name,
@@ -64,11 +90,48 @@ export class ItemService {
         createdAt,
         isSalePrivate,
       };
+      const stats = await this.getCategoriesStats();
+      const document = await this.getFirstDocumentFromCollection(this.productsStatisticsCollection);
+      const documentId = document.id;
+      var categoryStat;
+      for (const [key, value] of Object.entries(stats)) {
+        if (key === itemCategory) {
+          categoryStat = value;
+        }
+      }
+      if (categoryStat) {
+        const statIncremented = Number(categoryStat) + 1;
+        const data = {
+          [itemCategory]: statIncremented,
+        };
+        const docRef = doc(this.productsStatisticsCollection, documentId);
+        await updateDoc(docRef, data);
+      }
+
       const promise = addDoc(this.productsCollection, itemToCreate).then((res) => res);
+
       return from(promise);
     } catch (e) {
       return from('Error');
     }
+  }
+
+  async getCategoriesStats(): Promise<ICategoriesStats> {
+    return new Promise((resolve) => {
+      const statsSubject = new BehaviorSubject<ICategoriesStats>({});
+      collectionData(this.productsStatisticsCollection).subscribe((data) => {
+        statsSubject.next(data[0]);
+        resolve(statsSubject.getValue());
+      });
+    });
+  }
+
+  async getFirstDocumentFromCollection(collection: CollectionReference): Promise<QueryDocumentSnapshot> {
+    return new Promise(async (resolve) => {
+      await getDocs(collection).then((docs) => {
+        resolve(docs.docs[0]);
+      });
+    });
   }
 
   async getProductsBySubcategory(subcategory: string): Promise<Observable<IItem[]>> {

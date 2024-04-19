@@ -12,7 +12,7 @@
   >
   <span class="uppercase font-jost font-bold text-neutral-600 text-base">{{ resultsAmount }} results</span>
 </div>
-} @if (resultsAmount > 0){
+} @if (results.length > 0){
 <div class="py-4 flex flex-col space-y-4">
   @for(item of results; track item){
   <app-results-item-card [item]="item" />

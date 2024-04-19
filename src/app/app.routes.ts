@@ -55,6 +55,7 @@ export const routes: Routes = [
     data: { authGuardPipe: redirectUnauthorizedToHome },
   },
   { path: 'category/:category/:subcategory', component: ResultsPageComponent },
+  { path: 'category/:category', component: ResultsPageComponent },
   { path: 'search/:keyword', component: ResultsPageComponent },
   { path: 'sale/:id', component: ItemPageComponent },
 ];

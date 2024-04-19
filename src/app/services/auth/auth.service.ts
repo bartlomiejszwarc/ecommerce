@@ -26,8 +26,10 @@ interface IUserCredentialsRegister {
 })
 export class AuthService {
   currentUser = signal<User | null>(null);
+  isDoneLoading = signal<boolean>(false);
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
+      this.isDoneLoading.set(true);
       this.currentUser.set(user);
       // if (this.currentUser()) {
       //   this.router.navigate(['/home']);

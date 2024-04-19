@@ -27,7 +27,7 @@ export class ResultsPageComponent {
       this.category = params['category'];
       this.subcategory = params['subcategory'];
       this.keyword = params['keyword'];
-      if (this.category && this.subcategory) this.getResults();
+      if (this.category) this.getResults();
     });
   }
 

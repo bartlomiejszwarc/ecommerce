@@ -1,3 +1,4 @@
+import { ItemService } from './services/item/item.service';
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
@@ -17,10 +18,12 @@ export class AppComponent {
   router = inject(Router);
   authService = inject(AuthService);
   userService = inject(UserService);
+  itemService = inject(ItemService);
   // ^ bug firebase error: expected first argument to collection() to be a colletion refercene, a document reference or firebase firestore
 
   async ngOnInit() {
     await this.getUserData();
+    await this.itemService.getCategoriesStats();
   }
   async getUserData() {
     (await this.authService.getCurrentUserData()).subscribe(async (user: any) => {
