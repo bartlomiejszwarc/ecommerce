@@ -27,6 +27,8 @@ export class TopCategoriesListComponent {
   async getTopCategories() {
     const stats = await this.itemService.getCategoriesStats();
     this.categoriesData = this.mapCategories(stats);
+    this.categoriesData.sort((a, b) => b.count - a.count);
+    this.categoriesData = this.categoriesData.slice(0, 5);
   }
 
   mapCategories(stats: ICategoriesStats): any {
