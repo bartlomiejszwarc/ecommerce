@@ -3,6 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IItem, ItemService } from './../../services/item/item.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -33,6 +35,7 @@ import { CreateItemFinishedBoardComponent } from './create-item-finished-board/c
     ButtonFormSubmitComponent,
     MatSelectModule,
     CreateItemFinishedBoardComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './create-item.component.html',
   styleUrl: './create-item.component.css',
@@ -64,6 +67,7 @@ export class CreateItemComponent {
   itemSubcategory: string = '';
   currentCategory: any;
   isCreationFinished: boolean = false;
+  isCreationProcessing: boolean = false;
 
   categories: ICategory[] = categories;
 
@@ -71,7 +75,7 @@ export class CreateItemComponent {
     try {
       const userId = this.authService.currentUser()?.uid;
       if (!userId) throw new Error('User not found');
-
+      this.isCreationProcessing = true;
       const data: IItem = {
         userId: userId!,
         name: this.itemName,
@@ -86,8 +90,14 @@ export class CreateItemComponent {
         isSalePrivate: this.itemIsSalePrivate,
       };
       (await this.itemService.createItem(data)).subscribe({
-        error: (err) => console.log(err),
-        complete: () => (this.isCreationFinished = true),
+        error: (err) => {
+          this.isCreationProcessing = false;
+          this.isCreationFinished = false;
+        },
+        complete: () => {
+          this.isCreationFinished = true;
+          this.isCreationProcessing = false;
+        },
       });
     } catch (e) {}
   };

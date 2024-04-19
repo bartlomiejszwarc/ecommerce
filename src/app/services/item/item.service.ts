@@ -90,9 +90,10 @@ export class ItemService {
         createdAt,
         isSalePrivate,
       };
+
       const stats = await this.getCategoriesStats();
       const document = await this.getFirstDocumentFromCollection(this.productsStatisticsCollection);
-      const documentId = document.id;
+      const docRef = doc(this.productsStatisticsCollection, document.id);
       var categoryStat;
       for (const [key, value] of Object.entries(stats)) {
         if (key === itemCategory) {
@@ -104,7 +105,11 @@ export class ItemService {
         const data = {
           [itemCategory]: statIncremented,
         };
-        const docRef = doc(this.productsStatisticsCollection, documentId);
+        await updateDoc(docRef, data);
+      } else {
+        const data = {
+          [itemCategory]: 1,
+        };
         await updateDoc(docRef, data);
       }
 

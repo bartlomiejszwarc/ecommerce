@@ -1,1 +1,7 @@
-<p>top-categories-card works!</p>
+<div
+  class="flex flex-col space-y-1 items-center w-44 h-44 bg-neutral-200 hover:bg-neutral-300 rounded-full justify-center cursor-pointer shadow-md shadow-neutral-300"
+>
+  <img [src]="category.icon" class="w-16 h-16" alt="Category icon" />
+  <span class="text-center h-10 font-bold">{{ category.category }}</span>
+  <!-- <span>{{ category.count }}products</span> -->
+</div>

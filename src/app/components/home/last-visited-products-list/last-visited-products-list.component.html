@@ -1,6 +1,6 @@
 @if (products){
 <div class="flex flex-col space-y-3">
-  <p class="text-xl lg:text-2xl font-bold">Recently viewed products</p>
+  <app-text-header text="Recenlty viewed products" />
   <div class="flex flex-grow flex-1 justify-start flex-wrap gap-4 w-full">
     @for(productId of products; track productId){ <app-last-visited-product-card [itemId]="productId" />}
   </div>

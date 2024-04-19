@@ -1,4 +1,4 @@
-@if (!isCreationFinished) {
+@if (!isCreationFinished && !isCreationProcessing) {
 <div class="w-full xl:w-10/12 rounded-lg border-neutral-300 border-4">
   <mat-vertical-stepper [linear]="false" #stepper>
     <mat-step>
@@ -125,5 +125,9 @@
 } @if (isCreationFinished){
 <div class="w-full xl:w-10/12 rounded-lg border-neutral-300 border-4">
   <app-create-item-finished-board />
+</div>
+} @if (isCreationProcessing){
+<div class="w-full xl:w-10/12 flex items-center justify-center">
+  <mat-spinner [diameter]="60"></mat-spinner>
 </div>
 }
