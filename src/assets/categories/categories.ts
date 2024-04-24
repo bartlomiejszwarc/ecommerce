@@ -47,7 +47,7 @@ export const categories: ICategory[] = [
       'Mixers',
       'Others',
     ],
-    icon: 'https://firebasestorage.googleapis.com/v0/b/salehub-120d1.appspot.com/o/categories_icons%2Fmusic-icon.png?alt=media&token=dca29fc5-df52-41ee-9f31-058aaac0db01',
+    icon: 'https://firebasestorage.googleapis.com/v0/b/salehub-120d1.appspot.com/o/categories_icons%2Fmusic-icon.png?alt=media&token=d2beab49-18fa-49b8-a048-34c8d936c208',
   },
   {
     category: 'Video games',
