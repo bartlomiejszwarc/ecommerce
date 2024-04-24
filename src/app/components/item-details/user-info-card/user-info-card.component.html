@@ -1,0 +1,13 @@
+@if(user && item) {
+<div class="w-full bg-neutral-50 border-2 border-neutral-200 rounded-lg py-6 px-4 space-y-3 flex flex-col">
+  @if (item.isSalePrivate){
+  <span class="font-bold tracking-wide text-neutral-700 text-sm">Private</span>
+  } @else{
+  <span>Company</span>
+  }
+  <div class="flex flex-col space-y-1">
+    <span class="text-base font-light">{{ user.displayName }}</span>
+    <span class="font-light text-neutral-600 text-xs">On eSale since {{ dateConverted }}</span>
+  </div>
+</div>
+}

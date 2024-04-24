@@ -3,7 +3,7 @@
     class="flex bg-neutral-800 w-full h-12 rounded-full items-center justify-between md:justify-between px-4 shadow-lg shadow-neutral-400"
   >
     <div class="hidden md:flex cursor-pointer" routerLink="/home"><app-logo [size]="3" /></div>
-    <div class="flex md:hidden cursor-pointer"><app-logo [size]="1" /></div>
+    <div class="flex md:hidden cursor-pointer" routerLink="/home"><app-logo [size]="1" /></div>
     <div class="flex items-center space-x-4 justify-around md:justify-center">
       <app-navbar-field url="/create" iconName="add" text="Create" />
       <app-navbar-field url="/categories" iconName="category" text="Categories" />

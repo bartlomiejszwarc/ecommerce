@@ -1,0 +1,11 @@
+<div class="w-full bg-neutral-50 border-2 border-neutral-200 rounded-lg py-6 px-4 space-y-3 flex flex-col">
+  <div class="flex space-x-4 py-2">
+    <app-item-description-card-tag [text]="'&#x24;' + item.price.toString()" />
+    <app-item-description-card-tag [text]="item.isNew ? 'New' : 'Used'" />
+    <app-item-description-card-tag [text]="item.isSalePrivate ? 'Private' : 'Company'" />
+  </div>
+  <span class="uppercase font-bold text-neutral-700 text-2xl tracking-wide">Description</span>
+  <span class="text-lg">{{
+    item.description ? item.description : 'Description has not been added to this sale.'
+  }}</span>
+</div>

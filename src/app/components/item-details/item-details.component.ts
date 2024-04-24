@@ -3,11 +3,18 @@ import { IItem } from '../../services/item/item.service';
 import { ItemDetailsImagesComponent } from './item-details-images/item-details-images.component';
 import { IUser, UserService } from '../../services/user/user.service';
 import { SummaryContactCardComponent } from './summary-contact-card/summary-contact-card/summary-contact-card.component';
+import { UserInfoCardComponent } from './user-info-card/user-info-card.component';
+import { ItemDescriptionCardComponent } from './item-description-card/item-description-card.component';
 
 @Component({
   selector: 'app-item-details',
   standalone: true,
-  imports: [ItemDetailsImagesComponent, SummaryContactCardComponent],
+  imports: [
+    ItemDetailsImagesComponent,
+    SummaryContactCardComponent,
+    UserInfoCardComponent,
+    ItemDescriptionCardComponent,
+  ],
   templateUrl: './item-details.component.html',
   styleUrl: './item-details.component.css',
 })

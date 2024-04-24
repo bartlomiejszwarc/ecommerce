@@ -10,7 +10,7 @@ import { Component, Input, WritableSignal, signal } from '@angular/core';
 export class ItemDetailsImagesComponent {
   @Input() images!: string[] | null;
   currentImage: number = 0;
-  autoplay: WritableSignal<boolean> = signal(true);
+  autoplay: WritableSignal<boolean> = signal(false);
   autoplayInterval!: NodeJS.Timeout;
 
   ngOnInit() {
