@@ -1,21 +1,25 @@
 @if (images){
 <div class="flex flex-col relative w-full justify-center items-center bg-transparent">
   <div class="h-80 md:h-96 relative">
+    @if(images!.length > 1){
     <button
       class="material-icons absolute top-1/2 left-0 translate-y-[-50%] text-neutral-700 m-0"
       (click)="setNextImageLeft()"
     >
       arrow_back_ios_new
     </button>
+    }
     <img [src]="images![currentImage]" class="w-80 h-full md:w-96 object-scale-down px-10" />
+    @if(images!.length > 1){
     <button
       class="material-icons absolute top-1/2 right-0 translate-y-[-50%] text-neutral-700"
       (click)="setNextImageRight()"
     >
-      arrow_forward_ios
-    </button>
+      arrow_forward_ios</button
+    >}
   </div>
 
+  @if(images!.length > 1 ){
   <div class="flex flex-col space-y-5 items-center">
     <div class="flex space-x-5">
       @for (dot of images; track dot; let index = $index){ @if (index === currentImage){
@@ -33,6 +37,7 @@
       }
     </div>
   </div>
+  }
 </div>
 
 }

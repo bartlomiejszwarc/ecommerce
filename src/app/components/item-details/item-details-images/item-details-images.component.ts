@@ -14,7 +14,7 @@ export class ItemDetailsImagesComponent {
   autoplayInterval!: NodeJS.Timeout;
 
   ngOnInit() {
-    this.autoplayImages();
+    if (this.images!.length > 1) this.autoplayImages();
   }
 
   setNextImageRight() {
