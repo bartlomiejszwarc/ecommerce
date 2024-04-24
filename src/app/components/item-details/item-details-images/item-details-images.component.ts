@@ -33,7 +33,7 @@ export class ItemDetailsImagesComponent {
   }
 
   autoplayImages() {
-    if (this.autoplay()) this.autoplayInterval = setInterval(() => this.setNextImageRight(), 1500);
+    if (this.autoplay()) this.autoplayInterval = setInterval(() => this.setNextImageRight(), 3000);
     if (!this.autoplay()) {
       clearInterval(this.autoplayInterval);
     }
@@ -41,5 +41,13 @@ export class ItemDetailsImagesComponent {
   setAutoplay() {
     this.autoplay.set(!this.autoplay());
     this.autoplayImages();
+  }
+
+  setCurrentImage(index: number) {
+    this.currentImage = index;
+    if (this.autoplay()) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = setInterval(() => this.setNextImageRight(), 3000);
+    }
   }
 }
