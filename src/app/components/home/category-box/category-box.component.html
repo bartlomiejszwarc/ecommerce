@@ -1,0 +1,18 @@
+<div class="w-full h-36 md:h-52 lg:h-64 xl:h-80 bg-neutral-200 rounded-xl flex">
+  <div class="w-[45%] flex flex-col px-6 py-4 md:py-6 lg:py-10 justify-start">
+    <span class="text-sm md:text-xl lg:text-3xl font-bold">{{ categories[index].categoryLeadingText }}</span>
+    <div class="flex flex-col text-xs md:text-base lg:text-lg space-y-5 font-thin text-neutral-700">
+      <span class="">{{ categories[index].categorySubText }}</span>
+      <span class="underline underline-offset-4 text-neutral-700 font-bold">Browse category</span>
+    </div>
+  </div>
+  <div class="w-[55%] relative">
+    <img
+      [src]="categories[index].categoryImage"
+      alt="Category image"
+      class="object-cover w-full h-full object-top rounded-tr-xl rounded-br-xl fade-in"
+      (load)="handleImageLoad()"
+      [ngClass]="{ 'fade-in': fadeIn, 'fade-out': !fadeIn }"
+    />
+  </div>
+</div>

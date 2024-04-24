@@ -5,6 +5,7 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar.compo
 import { IUser, UserService } from '../../services/user/user.service';
 import { LastVisitedProductsListComponent } from '../../components/home/last-visited-products-list/last-visited-products-list.component';
 import { TopCategoriesListComponent } from '../../components/home/top-categories-list/top-categories-list.component';
+import { CategoryBoxComponent } from '../../components/home/category-box/category-box.component';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -13,6 +14,7 @@ import { TopCategoriesListComponent } from '../../components/home/top-categories
     SearchBarComponent,
     LastVisitedProductsListComponent,
     TopCategoriesListComponent,
+    CategoryBoxComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
