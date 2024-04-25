@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   User,
 } from '@angular/fire/auth';
@@ -27,6 +28,7 @@ interface IUserCredentialsRegister {
 export class AuthService {
   currentUser = signal<User | null>(null);
   isDoneLoading = signal<boolean>(false);
+  router = inject(Router);
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
       this.isDoneLoading.set(true);
@@ -65,12 +67,13 @@ export class AuthService {
           const userId = response.user.uid;
           const data = { userId, email, displayName, createdAt };
           await addDoc(this.usersCollection, data);
+          this.router.navigate(['/']);
         }
       });
     } catch (e) {}
   }
 
   logout() {
-    //return this.fireAuth.signOut();
+    return signOut(this.auth);
   }
 }

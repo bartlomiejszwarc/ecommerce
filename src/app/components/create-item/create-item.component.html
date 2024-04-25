@@ -5,7 +5,14 @@
       <ng-template matStepLabel>Name and describe</ng-template>
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput placeholder="E.g. Sony 3D glasses" [(ngModel)]="itemName" maxlength="{{ itemNameMaxLength }}" />
+        <input
+          matInput
+          placeholder="E.g. Sony 3D glasses"
+          [(ngModel)]="itemName"
+          maxlength="{{ itemNameMaxLength }}"
+          #name
+          (change)="onNameChange(this.name.value)"
+        />
         <div class="w-full flex justify-end">
           <span class="text-xs text-neutral-600">{{ itemName.length }}/{{ itemNameMaxLength }}</span>
         </div>
@@ -113,6 +120,14 @@
         [category]="itemCategory"
         [subcategory]="itemSubcategory"
       />
+      <div class="flex flex-col space-y-1">
+        @if(itemNameErrorMessage){<span class="text-sm text-red-800">&#x2022; {{ itemNameErrorMessage }}</span
+        >} @if(itemCategoryErrorMessage){<span class="text-sm text-red-800">
+          &#x2022; {{ itemCategoryErrorMessage }}</span
+        >} @if(itemImagesArrayErrorMessage){<span class="text-sm text-red-800">
+          &#x2022; {{ itemImagesArrayErrorMessage }}</span
+        >}
+      </div>
       <div class="w-full flex justify-end space-x-2">
         <button mat-button matStepperPrevious>Back</button>
         <button class="text-neutral-50 font-medium rounded-sm bg-cyan-600 px-4 py-1" (click)="onCreateItem()">

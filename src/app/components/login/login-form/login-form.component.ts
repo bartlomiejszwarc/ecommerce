@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ButtonFormSubmitComponent } from '../../button-form-submit/button-form-submit.component';
 import { LogoComponent } from '../../logo/logo.component';
+import { Router } from '@angular/router';
 
 interface UserLoginForm {
   email: string;
@@ -20,15 +21,19 @@ interface UserLoginForm {
 })
 export class LoginFormComponent {
   authService = inject(AuthService);
+  router = inject(Router);
   constructor() {}
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
 
-  onSubmitData = () => {
-    const formData: UserLoginForm = this.loginForm.value;
-    this.authService.login(formData);
+  onSubmitData = async () => {
+    try {
+      const formData: UserLoginForm = this.loginForm.value;
+      await this.authService.login(formData);
+      this.router.navigate(['/home']);
+    } catch (e) {}
   };
 
   get email() {

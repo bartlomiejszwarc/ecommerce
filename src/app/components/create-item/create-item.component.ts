@@ -46,7 +46,6 @@ export class CreateItemComponent {
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
     this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
   itemService = inject(ItemService);
@@ -69,38 +68,68 @@ export class CreateItemComponent {
   isCreationFinished: boolean = false;
   isCreationProcessing: boolean = false;
 
+  itemNameErrorMessage: string = '';
+  itemImagesArrayErrorMessage: string = '';
+  itemCategoryErrorMessage: string = '';
+
   categories: ICategory[] = categories;
 
   onCreateItem = async () => {
     try {
       const userId = this.authService.currentUser()?.uid;
       if (!userId) throw new Error('User not found');
-      this.isCreationProcessing = true;
-      const data: IItem = {
-        userId: userId!,
-        name: this.itemName,
-        description: this.itemDescription,
-        imagesArray: this.itemImagesToUploadArray,
-        imagesUrls: null,
-        price: this.itemPrice,
-        isNew: this.itemIsNew,
-        itemCategory: this.itemCategory,
-        itemSubcategory: this.itemSubcategory,
-        createdAt: new Date(),
-        isSalePrivate: this.itemIsSalePrivate,
-      };
-      (await this.itemService.createItem(data)).subscribe({
-        error: (err) => {
-          this.isCreationProcessing = false;
-          this.isCreationFinished = false;
-        },
-        complete: () => {
-          this.isCreationFinished = true;
-          this.isCreationProcessing = false;
-        },
-      });
+      const validator = this.validateInputs(this.itemName, this.itemImagesArray, this.itemCategory);
+      if (validator) {
+        this.isCreationProcessing = true;
+        const data: IItem = {
+          userId: userId!,
+          name: this.itemName,
+          description: this.itemDescription,
+          imagesArray: this.itemImagesToUploadArray,
+          imagesUrls: null,
+          price: this.itemPrice,
+          isNew: this.itemIsNew,
+          itemCategory: this.itemCategory,
+          itemSubcategory: this.itemSubcategory,
+          createdAt: new Date(),
+          isSalePrivate: this.itemIsSalePrivate,
+        };
+        (await this.itemService.createItem(data)).subscribe({
+          error: (err) => {
+            this.isCreationProcessing = false;
+            this.isCreationFinished = false;
+          },
+          complete: () => {
+            this.isCreationFinished = true;
+            this.isCreationProcessing = false;
+          },
+        });
+      }
     } catch (e) {}
   };
+
+  validateInputs(name: string, imagesArray: string[], itemCategory: string) {
+    console.log('Validating inputs: ', name, imagesArray, itemCategory);
+    this.itemNameErrorMessage = '';
+    this.itemCategoryErrorMessage = '';
+    this.itemImagesArrayErrorMessage = '';
+    var errors = 0;
+    if (name.length === 0) {
+      errors = errors + 1;
+      this.itemNameErrorMessage = 'Sale must have a title';
+    }
+    if (imagesArray.length === 0) {
+      errors = errors + 1;
+      this.itemImagesArrayErrorMessage = 'You must add at least one image';
+    }
+    if (!itemCategory || itemCategory.length === 0) {
+      errors = errors + 1;
+      this.itemCategoryErrorMessage = 'Sale must have a category';
+    }
+    console.log(errors, '<- errors');
+    if (errors === 0) return true;
+    else return false;
+  }
 
   onChange(price: string) {
     try {
@@ -116,7 +145,12 @@ export class CreateItemComponent {
     }
   }
 
+  onNameChange(name: string) {
+    this.itemNameErrorMessage = '';
+  }
+
   onCategoryChange(category: MatSelectChange) {
+    this.itemCategoryErrorMessage = '';
     this.itemSubcategory = '';
     this.currentCategory = null;
     this.currentCategory = category.value;
@@ -127,6 +161,7 @@ export class CreateItemComponent {
   }
 
   pushImageToArray(image: File, index: number) {
+    this.itemImagesArrayErrorMessage = '';
     const file = URL.createObjectURL(image);
     this.itemImagesArray.splice(index, 1, file);
     const blob = image.slice(0, image.size, image.type);
