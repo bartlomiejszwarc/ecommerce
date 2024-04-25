@@ -8,6 +8,7 @@ import {
   signOut,
   updateProfile,
   User,
+  updatePassword,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
@@ -51,6 +52,7 @@ export class AuthService {
   async getCurrentUserData() {
     return new Observable((observer) => {
       onAuthStateChanged(this.auth, (user) => {
+        this.currentUser.set(user);
         observer.next(user);
       });
     });
@@ -73,7 +75,12 @@ export class AuthService {
     } catch (e) {}
   }
 
-  logout() {
+  updatePassword(password: string) {
+    if (this.currentUser()) return updatePassword(this.currentUser() as User, password);
+    return null;
+  }
+
+  logout(): Promise<void> {
     return signOut(this.auth);
   }
 }

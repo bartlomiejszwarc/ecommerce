@@ -109,7 +109,6 @@ export class CreateItemComponent {
   };
 
   validateInputs(name: string, imagesArray: string[], itemCategory: string) {
-    console.log('Validating inputs: ', name, imagesArray, itemCategory);
     this.itemNameErrorMessage = '';
     this.itemCategoryErrorMessage = '';
     this.itemImagesArrayErrorMessage = '';
@@ -126,7 +125,6 @@ export class CreateItemComponent {
       errors = errors + 1;
       this.itemCategoryErrorMessage = 'Sale must have a category';
     }
-    console.log(errors, '<- errors');
     if (errors === 0) return true;
     else return false;
   }

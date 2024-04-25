@@ -1,4 +1,72 @@
-<p>Change password, delete account [...]</p>
-<div class="w-full flex justify-center">
-  <app-button-form-submit buttonText="Logout" (click)="logout()" class="w-36" />
+<!-- <p>Change password, delete account [...]</p> -->
+
+<div class="flex flex-col space-y-10 w-full items-center">
+  <div class="flex flex-col w-full md:w-96">
+    <span class="text-xl font-bold">Change your password</span>
+    <mat-form-field>
+      <mat-label>New password</mat-label>
+      <input
+        [type]="passwordVisible() ? 'text' : 'password'"
+        matInput
+        placeholder="Password"
+        [(ngModel)]="newPassword"
+        #newPasswd
+        (change)="onNewPasswordChange(this.newPasswd.value)"
+      />
+      @if(!passwordVisible()){<mat-icon
+        matSuffix
+        class="text-neutral-500 cursor-pointer"
+        (click)="passwordVisible.set(true)"
+        >visibility</mat-icon
+      >} @if(passwordVisible()){<mat-icon
+        matSuffix
+        class="text-neutral-500 cursor-pointer"
+        (click)="passwordVisible.set(false)"
+        >visibility_off</mat-icon
+      >}
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Repeat new password</mat-label>
+      <input
+        [type]="passwordVisible() ? 'text' : 'password'"
+        matInput
+        placeholder="Password"
+        [(ngModel)]="newPasswordRepeat"
+        #newPasswdRepeat
+        (change)="onNewPasswordRepeatChange(this.newPasswdRepeat.value)"
+      />
+      @if(!passwordVisible()){<mat-icon
+        matSuffix
+        class="text-neutral-500 cursor-pointer"
+        (click)="passwordVisible.set(true)"
+        >visibility</mat-icon
+      >} @if(passwordVisible()){<mat-icon
+        matSuffix
+        class="text-neutral-500 cursor-pointer"
+        (click)="passwordVisible.set(false)"
+        >visibility_off</mat-icon
+      >}
+    </mat-form-field>
+    <div class="w-full flex">
+      <app-button-form-submit (click)="onPasswordChangeSubmit()" buttonText="Change password" class="w-full md:w-96" />
+    </div>
+  </div>
+
+  <div class="flex flex-col space-y-6 py-8 w-full md:w-96">
+    <span class="text-xl font-bold tracking-wider">Other actions</span>
+    <div class="w-full">
+      <span class="text-xl font-bold">Safe area</span>
+      <div class="bg-neutral-300 py-2 px-3 w-full md:w-96 flex items-center space-x-2 rounded-md mt-2">
+        <span class="material-icons">logout</span>
+        <span class="font-bold">Log out</span>
+      </div>
+    </div>
+    <div>
+      <span class="text-xl font-bold">Dangerous area</span>
+      <div class="bg-neutral-300 py-2 px-3 w-full md:w-96 flex items-center space-x-2 rounded-md mt-2">
+        <span class="material-icons">person_remove</span>
+        <span class="font-bold">Delete your account</span>
+      </div>
+    </div>
+  </div>
 </div>
