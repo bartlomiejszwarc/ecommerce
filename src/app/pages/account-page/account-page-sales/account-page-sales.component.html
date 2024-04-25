@@ -5,8 +5,14 @@
   }
 </div>
 } @else {
-<div class="flex flex-col space-y-2">
-  <span>You have no sales:(</span>
-  <span class="text-2xl">Add one <span class="text-cyan-700 font-bold">here!</span></span>
+<div class="flex flex-col space-y-4 items-center">
+  <span class="text-lg md:text-2xl font-extralight">You have no active sales:(</span>
+  <img src="./../../../../assets/svgs/undraw_empty_re_opql.svg" class="w-80 md:w-96" />
+  <span class="text-xl md:text-3xl"
+    >Add one
+    <span class="text-cyan-600 font-bold underline underline-offset-4 cursor-pointer" routerLink="/create"
+      >here!</span
+    ></span
+  >
 </div>
 }
