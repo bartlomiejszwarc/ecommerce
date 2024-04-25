@@ -13,6 +13,9 @@ import {
   updateDoc,
   CollectionReference,
   QueryDocumentSnapshot,
+  QuerySnapshot,
+  DocumentData,
+  DocumentSnapshot,
 } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { BehaviorSubject, Observable, from, map, of } from 'rxjs';
@@ -124,10 +127,25 @@ export class ItemService {
   async getCategoriesStats(): Promise<ICategoriesStats> {
     return new Promise((resolve) => {
       const statsSubject = new BehaviorSubject<ICategoriesStats>({});
-      collectionData(this.productsStatisticsCollection).subscribe((data) => {
-        statsSubject.next(data[0]);
-        resolve(statsSubject.getValue());
-      });
+
+      getDocs(this.productsStatisticsCollection)
+        .then((querySnapshot: QuerySnapshot<DocumentData>) => {
+          querySnapshot.forEach((doc: DocumentSnapshot<DocumentData>) => {
+            const docRef = doc.ref;
+            getDoc(docRef)
+              .then((statsDoc: DocumentSnapshot<DocumentData>) => {
+                const statsData = statsDoc.data();
+                statsSubject.next(statsData as ICategoriesStats);
+                resolve(statsSubject.getValue());
+              })
+              .catch((error) => {
+                console.error('Error while fetching data:', error);
+              });
+          });
+        })
+        .catch((error) => {
+          console.error('Error while fetching data:', error);
+        });
     });
   }
 
