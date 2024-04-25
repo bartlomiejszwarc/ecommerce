@@ -11,5 +11,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './last-visited-products-list.component.css',
 })
 export class LastVisitedProductsListComponent {
-  @Input() products: string[] | undefined = [];
+  @Input() products: string[] | null = [];
 }

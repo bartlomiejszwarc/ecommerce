@@ -14,7 +14,7 @@ export interface IUser {
   phoneNumber?: string;
   createdAt: Date;
   location: string;
-  lastVisitedProducts?: string[];
+  lastVisitedProducts: string[];
 }
 
 export interface IUpdateUserData {

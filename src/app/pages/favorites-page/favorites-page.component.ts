@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { IItem, ItemService } from '../../services/item/item.service';
 import { ResultsItemCardComponent } from '../../components/results-item-card/results-item-card.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-favorites-page',
   standalone: true,
-  imports: [ResultsItemCardComponent],
+  imports: [ResultsItemCardComponent, MatProgressSpinnerModule, RouterModule],
   templateUrl: './favorites-page.component.html',
   styleUrl: './favorites-page.component.css',
 })
@@ -25,7 +27,7 @@ export class FavoritesPageComponent {
     this.userService.userSubject.getValue();
     const userSubscription = this.userService.getUser().subscribe(async (user) => {
       this.favorites = [];
-      if (user) {
+      if (user && user.favorites) {
         for (const id of user?.favorites) {
           (await this.itemService.getItemById(id)).subscribe({
             next: (item) => {
@@ -42,6 +44,7 @@ export class FavoritesPageComponent {
         }
         userSubscription.unsubscribe();
       }
+      this.itemsLoaded = true;
     });
   }
 }

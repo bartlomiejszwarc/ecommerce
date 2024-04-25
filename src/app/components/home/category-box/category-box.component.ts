@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { categories } from '../../../../assets/categories/categories';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { animation } from '@angular/animations';
 
 @Component({
   selector: 'app-category-box',
@@ -15,19 +16,22 @@ export class CategoryBoxComponent {
   index = 0;
   fadeIn = false;
   animationDuration = 10000;
-
+  interval!: NodeJS.Timeout;
   handleImageLoad() {
     this.fadeIn = true;
     setTimeout(() => {
       this.fadeIn = false;
     }, this.animationDuration - 1000);
   }
-
   ngOnInit() {
-    setInterval(() => {
-      if (this.index + 1 === this.categories.length) this.index = 0;
+    window.setInterval(() => {
+      if (this.index + 1 === categories.length - 1) this.index = 0;
       else this.index = this.index + 1;
       this.fadeIn = false;
     }, this.animationDuration);
+  }
+
+  ngOnDistroy() {
+    clearInterval(this.interval);
   }
 }

@@ -23,11 +23,11 @@ export class HomePageComponent {
   authService = inject(AuthService);
   userService = inject(UserService);
   buttonText: string = 'logout';
-  user!: IUser | null;
+  user!: IUser;
 
   ngOnInit() {
     const userSubscription = this.userService.userSubject.subscribe((user) => {
-      this.user = user;
+      this.user = user as IUser;
     });
   }
 
