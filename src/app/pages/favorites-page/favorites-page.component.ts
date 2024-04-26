@@ -39,10 +39,10 @@ export class FavoritesPageComponent {
             },
             complete: () => {
               this.itemsLoaded = true;
+              userSubscription.unsubscribe();
             },
           });
         }
-        userSubscription.unsubscribe();
       }
       this.itemsLoaded = true;
     });

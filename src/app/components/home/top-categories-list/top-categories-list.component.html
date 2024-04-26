@@ -1,6 +1,6 @@
 <div class="flex flex-col space-y-3">
   <app-text-header text="Popular on eSale" />
-  <div class="flex gap-5 flex-wrap justify-center sm:justify-start">
+  <div class="flex gap-16 md:gap-5 flex-wrap justify-center sm:justify-start">
     @for(category of categoriesData; track category){
     <app-top-categories-card [category]="category" />
     }

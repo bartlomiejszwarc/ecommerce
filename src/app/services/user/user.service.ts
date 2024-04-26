@@ -71,35 +71,37 @@ export class UserService {
 
   async addToFavorites(itemId: string) {
     const user = this.userSubject.getValue();
-    const q = query(this.usersCollection, where('userId', '==', user!.userId));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
-      const userRef = querySnapshot.docs[0];
-      if (userRef) {
-        const docRef = doc(this.usersCollection, userRef.id);
-        if (userDataFromDatabase.favorites) {
-          const favoritesArray = Array.from(userDataFromDatabase.favorites);
-          favoritesArray.push(itemId);
-          const data = {
-            favorites: favoritesArray,
-          };
+    if (user) {
+      const q = query(this.usersCollection, where('userId', '==', user!.userId));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const userDataFromDatabase = querySnapshot.docs[0].data() as IUser;
+        const userRef = querySnapshot.docs[0];
+        if (userRef) {
+          const docRef = doc(this.usersCollection, userRef.id);
+          if (userDataFromDatabase.favorites) {
+            const favoritesArray = Array.from(userDataFromDatabase.favorites);
+            favoritesArray.push(itemId);
+            const data = {
+              favorites: favoritesArray,
+            };
 
-          await updateDoc(docRef, data);
-          const user = this.userSubject.getValue();
-          user!.favorites = favoritesArray;
-          this.userSubject.next(user);
-        } else {
-          const favoritesArray = [];
-          favoritesArray.push(itemId);
-          const data = {
-            favorites: favoritesArray,
-          };
+            await updateDoc(docRef, data);
+            const user = this.userSubject.getValue();
+            user!.favorites = favoritesArray;
+            this.userSubject.next(user);
+          } else {
+            const favoritesArray = [];
+            favoritesArray.push(itemId);
+            const data = {
+              favorites: favoritesArray,
+            };
 
-          await updateDoc(docRef, data);
-          const user = this.userSubject.getValue();
-          user!.favorites = favoritesArray;
-          this.userSubject.next(user);
+            await updateDoc(docRef, data);
+            const user = this.userSubject.getValue();
+            user!.favorites = favoritesArray;
+            this.userSubject.next(user);
+          }
         }
       }
     }
