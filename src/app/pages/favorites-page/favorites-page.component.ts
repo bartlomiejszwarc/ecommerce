@@ -4,6 +4,7 @@ import { IItem, ItemService } from '../../services/item/item.service';
 import { ResultsItemCardComponent } from '../../components/results-item-card/results-item-card.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-favorites-page',
@@ -18,8 +19,10 @@ export class FavoritesPageComponent {
   userId!: string;
   favorites: IItem[] = [];
   itemsLoaded: boolean = false;
+  title = inject(Title);
 
   async ngOnInit() {
+    this.title.setTitle('Favorites');
     this.getUsersFavorites();
   }
 

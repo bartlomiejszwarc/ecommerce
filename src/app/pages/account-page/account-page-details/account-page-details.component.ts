@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-page-details',
@@ -23,10 +24,12 @@ import { MatIconModule } from '@angular/material/icon';
 export class AccountPageDetailsComponent {
   user: IUser | null = null;
   userService = inject(UserService);
+  title = inject(Title);
   displayName!: string;
   phoneNumber!: string;
   location!: string;
   ngOnInit() {
+    this.title.setTitle('Account details');
     this.userService.getUser().subscribe((user) => {
       this.user = user;
     });

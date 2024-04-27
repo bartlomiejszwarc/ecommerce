@@ -7,6 +7,7 @@ import { AccountPageSettingsComponent } from './account-page-settings/account-pa
 import { IUser, UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { IItem } from '../../services/item/item.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-page',
@@ -26,8 +27,11 @@ export class AccountPageComponent {
   userProducts: IItem[] | null = [];
   user: IUser | null = null;
   route = inject(ActivatedRoute);
+  title = inject(Title);
+
   tab!: string;
   ngOnInit() {
+    this.title.setTitle('Account');
     this.route.params.subscribe(async (params) => {
       this.tab = params['tab'];
     });

@@ -1,2 +1,7 @@
-<input class="bg-transparent w-full outline-none" placeholder="E.g. HyperX Cloud II" />
-<span class="material-icons text-neutral-600">search</span>
+<input
+  class="bg-transparent w-full outline-none"
+  placeholder="E.g. Moog Minimoog Model D"
+  [(ngModel)]="searchInput"
+  (keyup.enter)="onSubmit(searchInput)"
+/>
+<span class="material-icons text-neutral-600" (click)="onSubmit(searchInput)">search</span>

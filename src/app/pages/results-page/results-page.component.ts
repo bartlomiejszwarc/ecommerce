@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResultsItemCardComponent } from '../../components/results-item-card/results-item-card.component';
 import { ItemService, IItem } from '../../services/item/item.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-results-page',
@@ -13,6 +14,7 @@ import { ItemService, IItem } from '../../services/item/item.service';
 export class ResultsPageComponent {
   route = inject(ActivatedRoute);
   itemService = inject(ItemService);
+  title = inject(Title);
   subcategory!: string;
   category!: string;
   keyword!: string;
@@ -26,7 +28,8 @@ export class ResultsPageComponent {
     this.route.params.subscribe(async (params) => {
       this.category = params['category'];
       this.subcategory = params['subcategory'];
-      this.keyword = params['keyword'];
+      this.title.setTitle(this.category);
+      if (this.subcategory) this.title.setTitle(this.category + ' - ' + this.subcategory);
       if (this.category) this.getResults();
     });
   }

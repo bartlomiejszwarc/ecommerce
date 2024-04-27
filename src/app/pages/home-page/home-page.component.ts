@@ -6,6 +6,7 @@ import { IUser, UserService } from '../../services/user/user.service';
 import { LastVisitedProductsListComponent } from '../../components/home/last-visited-products-list/last-visited-products-list.component';
 import { TopCategoriesListComponent } from '../../components/home/top-categories-list/top-categories-list.component';
 import { CategoryBoxComponent } from '../../components/home/category-box/category-box.component';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -22,10 +23,13 @@ import { CategoryBoxComponent } from '../../components/home/category-box/categor
 export class HomePageComponent {
   authService = inject(AuthService);
   userService = inject(UserService);
+  title = inject(Title);
+
   buttonText: string = 'logout';
   user!: IUser;
 
   ngOnInit() {
+    this.title.setTitle('eSale / Home');
     const userSubscription = this.userService.userSubject.subscribe((user) => {
       this.user = user as IUser;
     });

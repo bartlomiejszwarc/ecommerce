@@ -16,6 +16,7 @@ import { CreateItemFinishedBoardComponent } from '../../../components/create-ite
 import { CreateItemSummaryCardComponent } from '../../../components/create-item/create-item-summary-card/create-item-summary-card.component';
 import { ImageAddFieldComponent } from '../../../components/create-item/image-add-field/image-add-field.component';
 import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-page-settings',
@@ -44,6 +45,11 @@ import { MatIconModule } from '@angular/material/icon';
 export class AccountPageSettingsComponent {
   authService = inject(AuthService);
   router = inject(Router);
+  title = inject(Title);
+
+  ngOnInit() {
+    this.title.setTitle('Settings');
+  }
 
   newPassword: string = '';
   newPasswordRepeat: string = '';

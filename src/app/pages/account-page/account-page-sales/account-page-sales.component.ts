@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { IItem } from '../../../services/item/item.service';
 import { ResultsItemCardComponent } from '../../../components/results-item-card/results-item-card.component';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-page-sales',
@@ -12,4 +13,9 @@ import { RouterModule } from '@angular/router';
 })
 export class AccountPageSalesComponent {
   @Input() userProducts: IItem[] | null = [];
+  title = inject(Title);
+
+  ngOnInit() {
+    this.title.setTitle('Your sales');
+  }
 }

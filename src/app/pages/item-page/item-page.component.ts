@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IItem, ItemService } from '../../services/item/item.service';
 import { ItemDetailsComponent } from '../../components/item-details/item-details.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-item-page',
@@ -14,6 +15,7 @@ import { ItemDetailsComponent } from '../../components/item-details/item-details
 export class ItemPageComponent {
   route = inject(ActivatedRoute);
   itemService = inject(ItemService);
+  title = inject(Title);
   userService = inject(UserService);
   id!: string;
   item!: IItem | null;
@@ -29,6 +31,7 @@ export class ItemPageComponent {
   async getItemData(id: string) {
     (await this.itemService.getItemById(id)).subscribe((data) => {
       this.item = data;
+      this.title.setTitle('eSale / ' + data!.name);
     });
   }
 }

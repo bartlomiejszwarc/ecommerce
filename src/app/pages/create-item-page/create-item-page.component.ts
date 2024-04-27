@@ -1,5 +1,6 @@
+import { Title } from '@angular/platform-browser';
 import { CreateItemComponent } from './../../components/create-item/create-item.component';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-create-item-page',
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
   templateUrl: './create-item-page.component.html',
   styleUrl: './create-item-page.component.css',
 })
-export class CreateItemPageComponent {}
+export class CreateItemPageComponent {
+  title = inject(Title);
+  ngOnInit() {
+    this.title.setTitle('Create sale');
+  }
+}
