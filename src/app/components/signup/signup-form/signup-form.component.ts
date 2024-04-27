@@ -24,6 +24,8 @@ export class SignupFormComponent {
   errorMessage = signal<string>('');
   userService = inject(UserService);
 
+  submitDone = false;
+
   signUpForm: FormGroup = new FormGroup({
     email: new FormControl(''),
     displayName: new FormControl(''),
@@ -31,18 +33,21 @@ export class SignupFormComponent {
   });
 
   onSubmitData = () => {
-    if (this.password!.value.length > 6) {
+    if (this.password!.value.length > 5) {
       const formData: UserRegisterForm = this.signUpForm.value;
+      this.submitDone = true;
       this.authService
         .register(formData)
         .then(async () => {
           await this.getUserData();
         })
         .catch((e) => {
+          this.submitDone = false;
           console.log(e);
           this.errorMessage.set('Invalid e-mail or password');
         });
     } else {
+      this.submitDone = false;
       this.errorMessage.set('Password must be at least 6 characters long');
     }
   };

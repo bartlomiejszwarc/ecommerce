@@ -23,6 +23,7 @@ export class LoginFormComponent {
   authService = inject(AuthService);
   router = inject(Router);
   errorMessage = signal('');
+  submitDone = false;
   constructor() {}
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -31,10 +32,12 @@ export class LoginFormComponent {
 
   onSubmitData = async () => {
     try {
+      this.submitDone = true;
       const formData: UserLoginForm = this.loginForm.value;
       await this.authService.login(formData);
       this.router.navigate(['/home']);
     } catch (e) {
+      this.submitDone = false;
       this.errorMessage.set('Invalid credentials');
     }
   };
