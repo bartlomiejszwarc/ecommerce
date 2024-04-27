@@ -4,7 +4,7 @@
   <app-results-item-card [item]="item" />
   }
 </div>
-} @else {
+} @if (!isLoading && !userProducts) {
 <div class="flex flex-col space-y-4 items-center">
   <span class="text-lg md:text-2xl font-extralight">You have no active sales:(</span>
   <img src="./../../../../assets/svgs/undraw_empty_re_opql.svg" class="w-80 md:w-96" />
@@ -14,5 +14,9 @@
       >here!</span
     ></span
   >
+</div>
+} @if (isLoading){
+<div class="w-full flex justify-center pt-8">
+  <mat-spinner diameter="50" />
 </div>
 }

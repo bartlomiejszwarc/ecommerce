@@ -28,9 +28,11 @@ export class AccountPageComponent {
   user: IUser | null = null;
   route = inject(ActivatedRoute);
   title = inject(Title);
+  productsLoading: boolean = false;
 
   tab!: string;
   ngOnInit() {
+    this.productsLoading = true;
     this.title.setTitle('Account');
     this.route.params.subscribe(async (params) => {
       this.tab = params['tab'];
@@ -43,6 +45,7 @@ export class AccountPageComponent {
       if (user) {
         this.userService.getUserProducts(user.userId).then((data) => {
           this.userProducts = data;
+          this.productsLoading = false;
         });
       }
     });
