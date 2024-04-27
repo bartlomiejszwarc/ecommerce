@@ -1,5 +1,5 @@
 import { AuthService } from './../../../services/auth/auth.service';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -22,6 +22,7 @@ interface UserLoginForm {
 export class LoginFormComponent {
   authService = inject(AuthService);
   router = inject(Router);
+  errorMessage = signal('');
   constructor() {}
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -33,7 +34,9 @@ export class LoginFormComponent {
       const formData: UserLoginForm = this.loginForm.value;
       await this.authService.login(formData);
       this.router.navigate(['/home']);
-    } catch (e) {}
+    } catch (e) {
+      this.errorMessage.set('Invalid credentials');
+    }
   };
 
   get email() {

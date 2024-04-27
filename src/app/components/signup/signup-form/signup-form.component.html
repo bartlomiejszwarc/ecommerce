@@ -2,12 +2,7 @@
   <app-logo [size]="3" />
   <form [formGroup]="signUpForm" class="flex flex-col w-full md:w-72 font-jost space-y-6 text-xl">
     <div class="w-full flex border-b-[1px] border-neutral-100 space-x-2 py-2 items-center">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="person"
-        class="text-neutral-100"
-      ></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="mail" class="text-neutral-100"></mat-icon>
       <input
         formControlName="email"
         type="text"
@@ -20,7 +15,7 @@
       <mat-icon
         aria-hidden="false"
         aria-label="Example home icon"
-        fontIcon="public"
+        fontIcon="person"
         class="text-neutral-100"
       ></mat-icon>
       <input
@@ -40,7 +35,7 @@
         class="bg-transparent text-neutral-100 outline-none border-none placeholder:text-neutral-100 placeholder:text-md"
       />
     </div>
-    <span class="text-red-700 font-thin">{{ errorMessage() }}</span>
+    <span class="text-red-600 font-thin text-sm">{{ errorMessage() }}</span>
     <app-button-form-submit (click)="onSubmitData()" [buttonText]="buttonText"></app-button-form-submit>
   </form>
   <div class="w-full flex justify-center font-inter">

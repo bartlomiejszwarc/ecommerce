@@ -68,7 +68,9 @@ export class AuthService {
           this.login({ email, password });
         }
       });
-    } catch (e) {}
+    } catch (e) {
+      throw new Error('Invalid credentials');
+    }
   }
 
   updatePassword(password: string) {

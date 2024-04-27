@@ -31,15 +31,20 @@ export class SignupFormComponent {
   });
 
   onSubmitData = () => {
-    const formData: UserRegisterForm = this.signUpForm.value;
-    this.authService
-      .register(formData)
-      .then(async () => {
-        await this.getUserData();
-      })
-      .catch((e) => {
-        this.errorMessage.set('Invalid e-mail or password');
-      });
+    if (this.password!.value.length > 6) {
+      const formData: UserRegisterForm = this.signUpForm.value;
+      this.authService
+        .register(formData)
+        .then(async () => {
+          await this.getUserData();
+        })
+        .catch((e) => {
+          console.log(e);
+          this.errorMessage.set('Invalid e-mail or password');
+        });
+    } else {
+      this.errorMessage.set('Password must be at least 6 characters long');
+    }
   };
   async getUserData() {
     (await this.authService.getCurrentUserData()).subscribe(async (user: any) => {
