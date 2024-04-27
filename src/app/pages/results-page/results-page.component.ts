@@ -1,17 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ResultsItemCardComponent } from '../../components/results-item-card/results-item-card.component';
 import { ItemService, IItem } from '../../services/item/item.service';
 import { Title } from '@angular/platform-browser';
+import { categories } from '../../../assets/categories/categories';
 
 @Component({
   selector: 'app-results-page',
   standalone: true,
-  imports: [ResultsItemCardComponent],
+  imports: [ResultsItemCardComponent, RouterModule],
   templateUrl: './results-page.component.html',
   styleUrl: './results-page.component.css',
 })
 export class ResultsPageComponent {
+  categories = categories;
+  subcategories: string[] = [];
   route = inject(ActivatedRoute);
   itemService = inject(ItemService);
   title = inject(Title);
@@ -30,7 +33,11 @@ export class ResultsPageComponent {
       this.subcategory = params['subcategory'];
       this.title.setTitle(this.category);
       if (this.subcategory) this.title.setTitle(this.category + ' - ' + this.subcategory);
-      if (this.category) this.getResults();
+      if (this.category) {
+        this.subcategories = [];
+        this.getSubcategories();
+        this.getResults();
+      }
     });
   }
 
@@ -46,4 +53,14 @@ export class ResultsPageComponent {
       });
     }
   };
+
+  getSubcategories() {
+    this.categories.map((category) => {
+      if (category.category === this.category) {
+        category.subcategories.forEach((item) => {
+          this.subcategories.push(item);
+        });
+      }
+    });
+  }
 }
