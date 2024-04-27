@@ -19,7 +19,6 @@ export class AppComponent {
   authService = inject(AuthService);
   userService = inject(UserService);
   itemService = inject(ItemService);
-  // ^ bug firebase error: expected first argument to collection() to be a colletion refercene, a document reference or firebase firestore
 
   async ngOnInit() {
     await this.getUserData();

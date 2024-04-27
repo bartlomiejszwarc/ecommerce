@@ -34,11 +34,6 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       this.isDoneLoading.set(true);
       this.currentUser.set(user);
-      // if (this.currentUser()) {
-      //   this.router.navigate(['/home']);
-      // } else {
-      //   this.router.navigate(['/']);
-      // }
     });
   }
 
@@ -70,6 +65,7 @@ export class AuthService {
           const data = { userId, email, displayName, createdAt };
           await addDoc(this.usersCollection, data);
           this.router.navigate(['/']);
+          this.login({ email, password });
         }
       });
     } catch (e) {}

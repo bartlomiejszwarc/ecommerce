@@ -1,4 +1,4 @@
-@if(userProducts!.length > 0){
+@if(userProducts && userProducts!.length > 0){
 <div class="flex flex-col space-y-5">
   @for (item of userProducts; track item){
   <app-results-item-card [item]="item" />

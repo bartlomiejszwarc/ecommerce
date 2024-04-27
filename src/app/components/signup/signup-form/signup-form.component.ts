@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from '../../logo/logo.component';
 import { AuthService } from '../../../services/auth/auth.service';
+import { UserService } from '../../../services/user/user.service';
 interface UserRegisterForm {
   email: string;
   displayName: string;
@@ -21,6 +22,7 @@ interface UserRegisterForm {
 export class SignupFormComponent {
   authService = inject(AuthService);
   errorMessage = signal<string>('');
+  userService = inject(UserService);
 
   signUpForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -30,10 +32,24 @@ export class SignupFormComponent {
 
   onSubmitData = () => {
     const formData: UserRegisterForm = this.signUpForm.value;
-    this.authService.register(formData).catch((e) => {
-      this.errorMessage.set('Invalid e-mail or password');
-    });
+    this.authService
+      .register(formData)
+      .then(async () => {
+        await this.getUserData();
+      })
+      .catch((e) => {
+        this.errorMessage.set('Invalid e-mail or password');
+      });
   };
+  async getUserData() {
+    (await this.authService.getCurrentUserData()).subscribe(async (user: any) => {
+      if (user) {
+        (await this.userService.getUserDetailsById(user.uid)).subscribe((user) => {
+          this.userService.setUser(user);
+        });
+      }
+    });
+  }
 
   get name() {
     return this.signUpForm.get('name');
