@@ -1,7 +1,7 @@
 @if (this.urlPath === 'category'){
-<div class="flex flex-col md:items-end md:flex-row md:space-x-2">
+<div class="flex flex-col justify-end md:justify-start items-start md:items-end md:flex-row md:space-x-2">
   <span class="text-2xl md:text-3xl uppercase font-jost font-bold text-neutral-600"
-    >{{ category }} &#8250; {{ subcategory }}
+    >{{ category }} @if(subcategory){&#8250; {{ subcategory }}}
   </span>
   <span class="uppercase font-jost font-bold text-neutral-600 text-base">{{ results.length }} results</span>
 </div>
