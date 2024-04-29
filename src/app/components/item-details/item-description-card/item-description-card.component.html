@@ -4,7 +4,15 @@
     <app-item-description-card-tag [text]="item.isNew ? 'New' : 'Used'" />
     <app-item-description-card-tag [text]="item.isSalePrivate ? 'Private' : 'Company'" />
   </div>
-  <span class="uppercase font-bold text-neutral-700 text-2xl tracking-wide">Description</span>
+  <div class="flex space-x-3 items-center">
+    <span class="uppercase font-bold text-neutral-700 text-2xl tracking-wide">Description </span>
+    @if(user){ @if (user.userId === item.userId){
+    <span class="material-icons text-neutral-700 opacity-70 hover:opacity-95 cursor-pointer">edit</span>
+    <span class="material-icons text-red-700 opacity-70 hover:opacity-95 cursor-pointer" (click)="openDeleteDialog()"
+      >delete</span
+    >
+    } }
+  </div>
   <span class="text-lg">{{
     item.description ? item.description : 'Description has not been added to this sale.'
   }}</span>

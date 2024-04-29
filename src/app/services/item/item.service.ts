@@ -8,6 +8,7 @@ import {
   query,
   where,
   addDoc,
+  deleteDoc,
   collectionData,
   setDoc,
   updateDoc,
@@ -17,7 +18,7 @@ import {
   DocumentData,
   DocumentSnapshot,
 } from '@angular/fire/firestore';
-import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { Storage, getDownloadURL, ref, uploadBytes, deleteObject } from '@angular/fire/storage';
 import { BehaviorSubject, Observable, from, map, of } from 'rxjs';
 
 // export interface ICategoriesStats {
@@ -190,5 +191,18 @@ export class ItemService {
     } else {
       return of(null);
     }
+  }
+
+  async deleteItem(id: string, imagesUrls: string[]): Promise<void> {
+    const docRef = doc(this.firestore, 'products', id);
+    imagesUrls.forEach(async (url) => {
+      const fileRef = ref(this.storage, url);
+      await deleteObject(fileRef).catch((e) => {
+        console.log(e);
+      });
+    });
+    await deleteDoc(docRef).catch((e) => {
+      console.log(e);
+    });
   }
 }

@@ -30,6 +30,7 @@
   </div>
   <div class="flex flex-col justify-between items-end">
     <span class="text-base md:text-xl">${{ item.price }}</span>
+
     @if (!checkIfIsFavorite()){
     <span class="material-icons text-rose-600 cursor-pointer" (click)="addToFavorites(this.item.id)"
       >favorite_outline</span
