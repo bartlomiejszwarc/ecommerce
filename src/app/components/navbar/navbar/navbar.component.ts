@@ -14,4 +14,5 @@ import { AuthService } from '../../../services/auth/auth.service';
 })
 export class NavbarComponent {
   authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 }

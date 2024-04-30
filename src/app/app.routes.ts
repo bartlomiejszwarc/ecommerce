@@ -12,6 +12,7 @@ import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['home']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
 export const routes: Routes = [
   { path: 'signup', component: SignupPageComponent },
@@ -27,13 +28,13 @@ export const routes: Routes = [
     path: 'account',
     component: AccountPageComponent,
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToHome },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'account/:tab',
     component: AccountPageComponent,
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToHome },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'account/:nonexisting',
@@ -45,14 +46,14 @@ export const routes: Routes = [
     path: 'favorites',
     component: FavoritesPageComponent,
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToHome },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   { path: 'categories', component: CategoriesPageComponent },
   {
     path: 'create',
     component: CreateItemPageComponent,
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToHome },
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   { path: 'category/:category/:subcategory', component: ResultsPageComponent },
   { path: 'category/:category', component: ResultsPageComponent },
