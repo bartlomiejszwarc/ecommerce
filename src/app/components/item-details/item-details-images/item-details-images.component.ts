@@ -10,7 +10,7 @@ import { Component, Input, WritableSignal, signal } from '@angular/core';
 export class ItemDetailsImagesComponent {
   @Input() images!: string[] | null;
   currentImage: number = 0;
-  autoplay: WritableSignal<boolean> = signal(false);
+  autoplay: WritableSignal<boolean> = signal(true);
   autoplayInterval!: NodeJS.Timeout;
 
   ngOnInit() {
@@ -18,6 +18,8 @@ export class ItemDetailsImagesComponent {
   }
 
   setNextImageRight() {
+    clearInterval(this.autoplayInterval);
+    if (this.autoplay()) this.autoplayInterval = setInterval(() => this.setNextImageRight(), 3000);
     if (this.currentImage === this.images!.length - 1) {
       this.currentImage = 0;
     } else {
@@ -25,6 +27,8 @@ export class ItemDetailsImagesComponent {
     }
   }
   setNextImageLeft() {
+    clearInterval(this.autoplayInterval);
+    if (this.autoplay()) this.autoplayInterval = setInterval(() => this.setNextImageRight(), 3000);
     if (this.currentImage === 0) {
       this.currentImage = this.images!.length - 1;
     } else {

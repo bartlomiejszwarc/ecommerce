@@ -134,7 +134,7 @@ export class CreateItemComponent {
       let splitted = price.split('.');
       if (splitted.length > 1) {
         let firstValue = Number(splitted[0]);
-        let secondValue = Number(splitted[1].toString().substring(0, 2));
+        let secondValue = Number(splitted[1]?.toString().substring(0, 2));
         const value = firstValue + '.' + secondValue;
         this.itemPrice = Number(value);
       }

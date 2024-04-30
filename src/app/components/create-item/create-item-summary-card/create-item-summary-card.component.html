@@ -6,7 +6,7 @@
     >}
   </div>
   <div class="flex flex-wrap space-x-4">
-    <app-item-description-card-tag [text]="'$' + price.toString()" />
+    <app-item-description-card-tag [text]="'$' + price!.toString()" />
     <app-item-description-card-tag [text]="isNew ? 'New' : 'Used'" />
     <app-item-description-card-tag [text]="isSalePrivate ? 'Private' : 'Company'" />
   </div>
