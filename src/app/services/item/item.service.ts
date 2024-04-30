@@ -17,6 +17,8 @@ import {
   QuerySnapshot,
   DocumentData,
   DocumentSnapshot,
+  QueryFieldFilterConstraint,
+  QueryConstraint,
 } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes, deleteObject } from '@angular/fire/storage';
 import { BehaviorSubject, Observable, from, map, of } from 'rxjs';
@@ -95,6 +97,21 @@ export class ItemService {
         isSalePrivate,
       };
 
+      const productsCollectionRef = collection(this.firestore, 'products');
+      const productsStatsisticsCollectionRef = collection(this.firestore, 'productsStatistics');
+
+      const productsCollectionSnapshot = await getDocs(productsCollectionRef);
+      const productsStatisticsCollectionSnapshot = await getDocs(productsStatsisticsCollectionRef);
+
+      if (productsCollectionSnapshot.empty) {
+        const initialDocRef = doc(productsCollectionRef, 'products');
+        await setDoc(initialDocRef, {});
+      }
+      if (productsStatisticsCollectionSnapshot.empty) {
+        const initialDocRef = doc(productsStatsisticsCollectionRef, 'productsStatistics');
+        await setDoc(initialDocRef, {});
+      }
+
       const stats = await this.getCategoriesStats();
       const document = await this.getFirstDocumentFromCollection(this.productsStatisticsCollection);
       const docRef = doc(this.productsStatisticsCollection, document.id);
@@ -102,6 +119,7 @@ export class ItemService {
       for (const [key, value] of Object.entries(stats)) {
         if (key === itemCategory) {
           categoryStat = value;
+          break;
         }
       }
       if (categoryStat) {
@@ -158,9 +176,14 @@ export class ItemService {
     });
   }
 
-  async getProductsBySubcategory(subcategory: string): Promise<Observable<IItem[]>> {
+  async getProductsBySubcategory(subcategory: string, category: string): Promise<Observable<IItem[]>> {
     const items: IItem[] = [];
-    const q = query(this.productsCollection, where('itemSubcategory', '==', subcategory));
+    const q = query(
+      this.productsCollection,
+      where('itemSubcategory', '==', subcategory),
+      where('itemCategory', '==', category),
+    );
+
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const id = doc.id;

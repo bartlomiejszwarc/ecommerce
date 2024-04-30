@@ -48,7 +48,7 @@ export class ResultsPageComponent {
       });
     }
     if (this.category && this.subcategory) {
-      (await this.itemService.getProductsBySubcategory(this.subcategory)).subscribe((res) => {
+      (await this.itemService.getProductsBySubcategory(this.subcategory, this.category)).subscribe((res) => {
         this.results = res;
       });
     }
