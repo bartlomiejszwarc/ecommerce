@@ -30,5 +30,6 @@ export class ItemDescriptionCardComponent {
     const instance = dialogRef.componentInstance;
     if (this.item.id) instance.itemId = this.item.id;
     if (this.item.imagesUrls) instance.imagesUrls = this.item.imagesUrls;
+    if (this.item.itemCategory) instance.category = this.item.itemCategory;
   }
 }

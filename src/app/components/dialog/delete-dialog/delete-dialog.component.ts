@@ -19,13 +19,14 @@ import { Router } from '@angular/router';
 export class DeleteDialogComponent {
   @Input() itemId!: string;
   @Input() imagesUrls!: string[];
+  @Input() category!: string;
   itemService = inject(ItemService);
   dialog = inject(MatDialog);
   router = inject(Router);
 
   deleteItem() {
     if (this.itemId) {
-      this.itemService.deleteItem(this.itemId, this.imagesUrls).then(() => {
+      this.itemService.deleteItem(this.itemId, this.imagesUrls, this.category).then(() => {
         this.dialog.closeAll();
         this.router.navigate(['/home']);
       });

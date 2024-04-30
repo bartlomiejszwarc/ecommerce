@@ -81,4 +81,9 @@ export class AccountPageSettingsComponent {
     await this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  async deleteAccount() {
+    this.authService.deleteAccount();
+    this.router.navigate(['/']);
+  }
 }

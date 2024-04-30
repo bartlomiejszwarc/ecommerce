@@ -193,7 +193,7 @@ export class ItemService {
     }
   }
 
-  async deleteItem(id: string, imagesUrls: string[]): Promise<void> {
+  async deleteItem(id: string, imagesUrls: string[], itemCategory: string): Promise<void> {
     const docRef = doc(this.firestore, 'products', id);
     imagesUrls.forEach(async (url) => {
       const fileRef = ref(this.storage, url);
@@ -201,8 +201,25 @@ export class ItemService {
         console.log(e);
       });
     });
-    await deleteDoc(docRef).catch((e) => {
-      console.log(e);
-    });
+
+    const document = await this.getFirstDocumentFromCollection(this.productsStatisticsCollection);
+    const docStatsRef = doc(this.productsStatisticsCollection, document.id);
+    var categoryStat;
+    const stats = await this.getCategoriesStats();
+    for (const [key, value] of Object.entries(stats)) {
+      if (key === itemCategory) {
+        categoryStat = value;
+      }
+    }
+    if (categoryStat) {
+      const statIncremented = Number(categoryStat) - 1;
+      const data = {
+        [itemCategory]: statIncremented,
+      };
+      await updateDoc(docStatsRef, data);
+      await deleteDoc(docRef).catch((e) => {
+        console.log(e);
+      });
+    }
   }
 }
