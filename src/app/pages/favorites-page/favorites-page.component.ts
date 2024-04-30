@@ -37,9 +37,7 @@ export class FavoritesPageComponent {
               this.itemsLoaded = false;
               this.favorites.push(item as IItem);
             },
-            error: (err) => {
-              console.log(err);
-            },
+            error: (err) => {},
             complete: () => {
               this.itemsLoaded = true;
               userSubscription.unsubscribe();

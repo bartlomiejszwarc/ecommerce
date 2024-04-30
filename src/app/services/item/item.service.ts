@@ -197,9 +197,7 @@ export class ItemService {
     const docRef = doc(this.firestore, 'products', id);
     imagesUrls.forEach(async (url) => {
       const fileRef = ref(this.storage, url);
-      await deleteObject(fileRef).catch((e) => {
-        console.log(e);
-      });
+      await deleteObject(fileRef).catch((e) => {});
     });
 
     const document = await this.getFirstDocumentFromCollection(this.productsStatisticsCollection);
@@ -217,9 +215,7 @@ export class ItemService {
         [itemCategory]: statIncremented,
       };
       await updateDoc(docStatsRef, data);
-      await deleteDoc(docRef).catch((e) => {
-        console.log(e);
-      });
+      await deleteDoc(docRef).catch((e) => {});
     }
   }
 }

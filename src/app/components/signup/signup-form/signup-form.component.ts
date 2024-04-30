@@ -43,7 +43,6 @@ export class SignupFormComponent {
         })
         .catch((e) => {
           this.submitDone = false;
-          console.log(e);
           this.errorMessage.set('Invalid e-mail or password');
         });
     } else {

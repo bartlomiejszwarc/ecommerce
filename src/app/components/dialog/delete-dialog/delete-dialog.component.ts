@@ -32,4 +32,7 @@ export class DeleteDialogComponent {
       });
     }
   }
+  closeDialog() {
+    this.dialog.closeAll();
+  }
 }

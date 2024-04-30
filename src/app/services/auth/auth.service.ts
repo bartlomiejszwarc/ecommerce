@@ -89,9 +89,7 @@ export class AuthService {
         const q = query(this.usersCollection, where('userId', '==', userId));
         await getDocs(q).then(async (docs) => {
           const docRef = doc(this.firestore, 'users', docs.docs[0].id);
-          await deleteDoc(docRef).catch((e) => {
-            console.log(e);
-          });
+          await deleteDoc(docRef).catch((e) => {});
         });
         const productsQuery = query(this.productsCollection, where('userId', '==', userId));
         await getDocs(productsQuery).then((docs) => {
@@ -100,13 +98,9 @@ export class AuthService {
             const itemData = item.data()['imagesUrls'];
             itemData.forEach(async (url: any) => {
               const fileRef = ref(this.storage, url);
-              await deleteObject(fileRef).catch((e) => {
-                console.log(e);
-              });
+              await deleteObject(fileRef).catch((e) => {});
             });
-            deleteDoc(docRef).catch((e) => {
-              console.log(e);
-            });
+            deleteDoc(docRef).catch((e) => {});
           });
         });
       });

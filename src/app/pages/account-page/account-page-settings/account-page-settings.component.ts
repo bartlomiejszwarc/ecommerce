@@ -17,6 +17,8 @@ import { CreateItemSummaryCardComponent } from '../../../components/create-item/
 import { ImageAddFieldComponent } from '../../../components/create-item/image-add-field/image-add-field.component';
 import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from '../../../components/dialog/delete-account-dialog/delete-account-dialog.component';
 
 @Component({
   selector: 'app-account-page-settings',
@@ -38,6 +40,7 @@ import { Title } from '@angular/platform-browser';
     MatProgressSpinnerModule,
     DividerWithTextComponent,
     MatIconModule,
+    DeleteAccountDialogComponent,
   ],
   templateUrl: './account-page-settings.component.html',
   styleUrl: './account-page-settings.component.css',
@@ -46,6 +49,7 @@ export class AccountPageSettingsComponent {
   authService = inject(AuthService);
   router = inject(Router);
   title = inject(Title);
+  dialog = inject(MatDialog);
 
   ngOnInit() {
     this.title.setTitle('Settings');
@@ -82,8 +86,7 @@ export class AccountPageSettingsComponent {
     this.router.navigate(['/']);
   }
 
-  async deleteAccount() {
-    this.authService.deleteAccount();
-    this.router.navigate(['/']);
+  openDeleteAccountDialog() {
+    this.dialog.open(DeleteAccountDialogComponent);
   }
 }
