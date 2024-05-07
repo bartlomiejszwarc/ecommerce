@@ -31,11 +31,15 @@ export class ResultsPageComponent {
     this.route.params.subscribe(async (params) => {
       this.category = params['category'];
       this.subcategory = params['subcategory'];
+      this.keyword = params['keyword'];
       this.title.setTitle(this.category);
       if (this.subcategory) this.title.setTitle(this.category + ' - ' + this.subcategory);
       if (this.category) {
         this.subcategories = [];
         this.getSubcategories();
+        this.getResults();
+      }
+      if (this.keyword) {
         this.getResults();
       }
     });
@@ -49,6 +53,11 @@ export class ResultsPageComponent {
     }
     if (this.category && this.subcategory) {
       (await this.itemService.getProductsBySubcategory(this.subcategory, this.category)).subscribe((res) => {
+        this.results = res;
+      });
+    }
+    if (this.keyword) {
+      (await this.itemService.getProductsByKeyword(this.keyword)).subscribe((res) => {
         this.results = res;
       });
     }

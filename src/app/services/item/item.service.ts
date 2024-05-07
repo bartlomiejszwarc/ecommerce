@@ -193,6 +193,19 @@ export class ItemService {
     return of(items);
   }
 
+  async getProductsByKeyword(keyword: string): Promise<Observable<IItem[]>> {
+    const items: IItem[] = [];
+    const q = query(this.productsCollection, where('name', '>=', keyword), where('name', '<=', keyword + '\uf8ff'));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const id = doc.id;
+      const data = doc.data() as IItem;
+      items.push({ id, ...data });
+    });
+    return of(items);
+  }
+
   async getProductsByCategory(category: string): Promise<Observable<IItem[]>> {
     const items: IItem[] = [];
     const q = query(this.productsCollection, where('itemCategory', '==', category));
