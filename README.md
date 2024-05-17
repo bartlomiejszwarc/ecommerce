@@ -1,6 +1,6 @@
 # eSale
 
-E-commerce web application that allows users to add and browse sale offers. <br>
+E-commerce web application. Users are able to add and browse sale offers. <br>
 Link: https://esale.netlify.app/
 
 ## Main features
